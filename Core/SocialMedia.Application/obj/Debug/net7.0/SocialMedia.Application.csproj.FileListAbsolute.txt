@@ -1,0 +1,15 @@
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\bin\Debug\net7.0\SocialMedia.Application.deps.json
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\bin\Debug\net7.0\SocialMedia.Application.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\bin\Debug\net7.0\SocialMedia.Application.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\bin\Debug\net7.0\SocialMedia.Domain.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\bin\Debug\net7.0\SocialMedia.Domain.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.csproj.AssemblyReference.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.GeneratedMSBuildEditorConfig.editorconfig
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.AssemblyInfoInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.AssemblyInfo.cs
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.csproj.CoreCompileInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.csproj.CopyComplete
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\refint\SocialMedia.Application.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\SocialMedia.Application.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Core\SocialMedia.Application\obj\Debug\net7.0\ref\SocialMedia.Application.dll

@@ -1,0 +1,17 @@
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Infrastructure.deps.json
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Infrastructure.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Infrastructure.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Application.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Domain.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Application.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\bin\Debug\net7.0\SocialMedia.Domain.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.csproj.AssemblyReference.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.AssemblyInfoInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.AssemblyInfo.cs
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.csproj.CoreCompileInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.csproj.CopyComplete
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\refint\SocialMedia.Infrastructure.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\SocialMedia.Infrastructure.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.Infrastructure\obj\Debug\net7.0\ref\SocialMedia.Infrastructure.dll
