@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "vsPAzrt8vvYMpZzoRGnQICl9jV8fYg1XpeGR5gXO9ElGypF8wsK3T6c8HQpouq/OxbmG0t6JRucW0tIuEJ5Dhg==",
+  "dgSpecHash": "F56CVolmb6HAwNllVVEoDHPwkIJHvZfm9dm5YvIBIVM8PstO5NVP99ekltcvzV/siC66asLODvRSFfWZkpj14g==",
   "success": true,
   "projectFilePath": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.Persistance\\SocialMedia.Persistance.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.2\\fluentvalidation.dependencyinjectionextensions.11.5.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

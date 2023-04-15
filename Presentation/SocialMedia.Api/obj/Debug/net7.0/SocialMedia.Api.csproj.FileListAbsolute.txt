@@ -88,3 +88,6 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\Soci
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Mono.TextTemplating.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\System.CodeDom.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll

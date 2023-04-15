@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "nR0Gq7QV87X1ciMRkg1rO6vX0epq7CduZ2SD6ODptt3cvHJ9Kt2eKS8F01c/iHvKQHvNrJEmH1vgkBO20SwUrg==",
+  "dgSpecHash": "OTDI4tUjxLAsiiGUsZ8qzSDjnp6u/lh4Vequ5Jo0nTfBUh9vM8umnsPFQn+mq3Jvh2PiKiqE+RI+Qsij6snPUw==",
   "success": true,
   "projectFilePath": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.Infrastructure\\SocialMedia.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.2\\fluentvalidation.dependencyinjectionextensions.11.5.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.2.0\\microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",

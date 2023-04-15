@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Persistance.Contexts;
+using SocialMedia.Persistance.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,7 @@ namespace SocialMedia.Persistance
             }).AddEntityFrameworkStores<AppDbContext>()
            .AddDefaultTokenProviders();
 
+            services.AddScoped<IUserService, UserService>();
 
         }
     }
