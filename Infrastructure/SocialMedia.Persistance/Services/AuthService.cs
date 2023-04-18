@@ -5,6 +5,7 @@ using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Application.DTOs;
 using SocialMedia.Application.Features.Commands.Auth.Login;
 using SocialMedia.Domain.Entities.Identity;
+using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace SocialMedia.Persistance.Services
                 return token;
             }
             else
-                throw new Exception("message");
+                throw new UserNotFoundException();
         }
     }
 }

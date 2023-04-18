@@ -1,6 +1,8 @@
 ﻿using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
+using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
+using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,5 +17,8 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<CreateUserCommandResponse> CreateUserAsync(CreateUserDto model);
         Task UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenDate);
         Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword);
+        Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId);
+        Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
+
     }
 }

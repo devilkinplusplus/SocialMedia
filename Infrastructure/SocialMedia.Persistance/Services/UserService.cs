@@ -1,14 +1,19 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Abstractions.Services;
+using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
+using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
+using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities.Identity;
+using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
 using System;
 using System.Collections.Generic;
@@ -24,12 +29,14 @@ namespace SocialMedia.Persistance.Services
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPasswordValidator<User> _passwordValidator;
-        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator)
+        private readonly IStorageService _storageService;
+        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _passwordValidator = passwordValidator;
+            _storageService = storageService;
         }
 
         public async Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword)
@@ -46,7 +53,7 @@ namespace SocialMedia.Persistance.Services
 
                 if (passwordResult.Succeeded)
                 {
-                    await UpdatePasswordAsync(user);
+                    await UpdateUserAsync(user);
                     return new() { Succeeded = true };
                 }
                 return new() { Succeeded = false, Errors = passwordResult.Errors.Select(x => x.Description).ToList() };
@@ -54,6 +61,18 @@ namespace SocialMedia.Persistance.Services
             }
 
             return new() { Succeeded = false };
+        }
+
+        public async Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId)
+        {
+            User? user = await _userManager.FindByIdAsync(userId);
+            if (user is not null)
+            {
+                user.IsPrivate = !user.IsPrivate;
+                await UpdateUserAsync(user);
+                return new() { Succeeded = true };
+            }
+            throw new UserNotFoundException();
         }
 
         public async Task<CreateUserCommandResponse> CreateUserAsync(CreateUserDto model)
@@ -79,6 +98,39 @@ namespace SocialMedia.Persistance.Services
             return new() { Succeeded = false, Errors = vResults.Errors.Select(x => x.ErrorMessage).ToList() };
         }
 
+        public async Task<EditUserCommandResponse> EditUserAsync(EditUserDto model)
+        {
+            User? user = await _userManager.FindByIdAsync(model.Id);
+            if (user is not null)
+            {
+                user.FirstName = (model.FirstName is null ? user.FirstName : model.FirstName);
+                user.LastName = (model.LastName is null ? user.LastName : model.LastName);
+                user.UserName = (model.UserName is null ? user.UserName : model.UserName);
+                user.About = (model.About is null ? user.About : model.About);
+                user.Date = model.Date;
+
+
+                ValidationResult vResult = await ValidateUserAsync(user);
+                if (vResult.IsValid)
+                {
+                    IdentityResult res = await UpdateUserAsync(user);
+                    return new() { Succeeded = res.Succeeded, Errors = res.Errors.Select(x => x.Description).ToList() };
+                }
+                return new() { Succeeded = vResult.IsValid, Errors = vResult.Errors.Select(x => x.ErrorMessage).ToList() };
+
+            }
+            throw new UserNotFoundException();
+        }
+
+    
+
+        private async Task<ValidationResult> ValidateUserAsync(User user)
+        {
+            UserValidator validationRules = new();
+            ValidationResult result = await validationRules.ValidateAsync(user);
+            return result;
+        }
+
         public async Task UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenDate)
         {
             if (user is not null)
@@ -88,12 +140,15 @@ namespace SocialMedia.Persistance.Services
                 await _userManager.UpdateAsync(user);
             }
             else
-                throw new Exception("Xeta");
+                throw new UserNotFoundException();
         }
 
         private async Task<bool> IsEmailExist(string email) => await _context.Users.AnyAsync(x => x.Email == email);
 
-        private async Task UpdatePasswordAsync(User user) => await _userManager.UpdateAsync(user);
+        private async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
 
     }
 }
