@@ -91,3 +91,9 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\Soci
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\AutoMapper.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\MediatR.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\MediatR.Contracts.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\SocialMedia.Api.staticwebassets.runtime.json

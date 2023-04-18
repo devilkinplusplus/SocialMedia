@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "+b+scJpQdXUs1AMX6UKZXxGv4WJBMO+oVCWaMH0u3NI=",
+  "Hash": "pt3cXfoQmFhN8wUvy/R5qJeIUPUAKOpW9Xb+LW8jDTg=",
   "Source": "SocialMedia.Api",
   "BasePath": "_content/SocialMedia.Api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "SocialMedia.Api\\wwwroot",
+      "Source": "SocialMedia.Api",
+      "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
+      "BasePath": "_content/SocialMedia.Api",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
+      "SourceId": "SocialMedia.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
+      "BasePath": "_content/SocialMedia.Api",
+      "RelativePath": "uploads/20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg"
+    }
+  ]
 }

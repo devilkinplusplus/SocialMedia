@@ -11,5 +11,7 @@ namespace SocialMedia.Domain.Entities.Identity
         public string? About { get; set; }
         public bool IsPrivate { get; set; }
         public DateTime Date { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenEndDate { get; set; }
     }
 }

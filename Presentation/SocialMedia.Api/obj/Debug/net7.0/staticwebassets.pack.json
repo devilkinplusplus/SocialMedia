@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
+      "PackagePath": "staticwebassets\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.SocialMedia.Api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.SocialMedia.Api.props",
+      "PackagePath": "build\\SocialMedia.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.SocialMedia.Api.props",
+      "PackagePath": "buildMultiTargeting\\SocialMedia.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.SocialMedia.Api.props",
+      "PackagePath": "buildTransitive\\SocialMedia.Api.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

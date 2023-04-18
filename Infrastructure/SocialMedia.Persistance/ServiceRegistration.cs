@@ -31,6 +31,7 @@ namespace SocialMedia.Persistance
            .AddDefaultTokenProviders();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
 
         }
     }
