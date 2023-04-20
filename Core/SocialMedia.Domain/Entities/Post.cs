@@ -10,5 +10,6 @@ namespace SocialMedia.Domain.Entities
     public class Post : BaseEntity
     {
         public string Content { get; set; }
+        public ICollection<PostImage> PostImages { get; set; }
     }
 }

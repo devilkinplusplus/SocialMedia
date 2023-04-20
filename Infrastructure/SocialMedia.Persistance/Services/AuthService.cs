@@ -33,7 +33,7 @@ namespace SocialMedia.Persistance.Services
 
         public async Task<LoginCommandResponse> LoginAsync(string emailOrUsername, string password)
         {
-            User user = await _userManager.FindByEmailAsync(emailOrUsername);
+            User? user = await _userManager.FindByEmailAsync(emailOrUsername);
 
             if (user is null)
                 user = await _userManager.FindByNameAsync(emailOrUsername);

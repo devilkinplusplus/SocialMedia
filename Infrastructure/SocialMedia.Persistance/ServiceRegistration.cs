@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SocialMedia.Application.Abstractions.Services;
+using SocialMedia.Application.Repositories.ProfileImages;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Persistance.Contexts;
+using SocialMedia.Persistance.Repositories.ProfileImages;
 using SocialMedia.Persistance.Services;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,9 @@ namespace SocialMedia.Persistance
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddScoped<IProfileImageReadRepository,ProfileImageReadRepository>();
+            services.AddScoped<IProfileImageWriteRepository,ProfileImageWriteRepository>();
 
         }
     }

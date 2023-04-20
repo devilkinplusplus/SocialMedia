@@ -18,6 +18,9 @@ namespace SocialMedia.Persistance.Contexts
         {
         }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<BaseFile> BaseFiles { get; set; }
+        public DbSet<ProfileImage> ProfileImages { get; set; }
+        public DbSet<PostImage> PostImages { get; set; }
 
         //Interceptor
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -26,7 +29,7 @@ namespace SocialMedia.Persistance.Contexts
 
             foreach (var item in data)
             {
-                item.Entity.Date = DateTime.UtcNow;    
+                item.Entity.Date = DateTime.UtcNow;
             }
 
             return base.SaveChangesAsync(cancellationToken);

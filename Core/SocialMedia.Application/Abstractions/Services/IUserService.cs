@@ -1,4 +1,5 @@
-﻿using SocialMedia.Application.DTOs.User;
+﻿using Microsoft.AspNetCore.Http;
+using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
@@ -19,6 +20,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword);
         Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId);
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
+        Task UploadProfileImageAsync(IFormFileCollection files);
 
     }
 }

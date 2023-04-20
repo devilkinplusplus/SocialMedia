@@ -11,6 +11,7 @@ using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
+using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
 
 namespace SocialMedia.Api.Controllers
 {
@@ -50,6 +51,14 @@ namespace SocialMedia.Api.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPut]
         public async Task<IActionResult> EditUser(EditUserCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [Authorize(AuthenticationSchemes ="Bearer")]
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromForm]UploadPICommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);

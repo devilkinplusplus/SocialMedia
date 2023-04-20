@@ -11,6 +11,7 @@ using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
+using SocialMedia.Application.Repositories.ProfileImages;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
@@ -30,13 +31,15 @@ namespace SocialMedia.Persistance.Services
         private readonly IMapper _mapper;
         private readonly IPasswordValidator<User> _passwordValidator;
         private readonly IStorageService _storageService;
-        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService)
+        private readonly IProfileImageWriteRepository _profileImageWrite;
+        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService, IProfileImageWriteRepository profileImageWrite)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _passwordValidator = passwordValidator;
             _storageService = storageService;
+            _profileImageWrite = profileImageWrite;
         }
 
         public async Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword)
@@ -122,8 +125,6 @@ namespace SocialMedia.Persistance.Services
             throw new UserNotFoundException();
         }
 
-    
-
         private async Task<ValidationResult> ValidateUserAsync(User user)
         {
             UserValidator validationRules = new();
@@ -150,5 +151,23 @@ namespace SocialMedia.Persistance.Services
             return await _userManager.UpdateAsync(user);
         }
 
+        public async Task UploadProfileImageAsync(IFormFileCollection files)
+        {
+            string pathName = "uploads\userImages";
+            var storageInfo = await _storageService.UploadAsync(pathName, files);
+
+            foreach (var item in storageInfo)
+            {
+                string fullPath = $"{item.pathName}/{item.fileName}";
+                await _profileImageWrite.AddAsync(new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FileName = item.fileName,
+                    Path = fullPath,
+                    Storage = _storageService.StorageName,
+                });
+            }
+            await _profileImageWrite.SaveAsync();
+        }
     }
 }

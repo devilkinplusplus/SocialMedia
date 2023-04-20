@@ -155,6 +155,39 @@ namespace SocialMedia.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.BaseFile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Storage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseFiles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseFile");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<string>("Id")
@@ -214,8 +247,8 @@ namespace SocialMedia.Persistance.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfilImage")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ProfileImageId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
@@ -243,6 +276,8 @@ namespace SocialMedia.Persistance.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("ProfileImageId");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -264,6 +299,26 @@ namespace SocialMedia.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
+                {
+                    b.HasBaseType("SocialMedia.Domain.Entities.BaseFile");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("PostId");
+
+                    b.HasDiscriminator().HasValue("PostImage");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.ProfileImage", b =>
+                {
+                    b.HasBaseType("SocialMedia.Domain.Entities.BaseFile");
+
+                    b.HasDiscriminator().HasValue("ProfileImage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -315,6 +370,31 @@ namespace SocialMedia.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.ProfileImage", "ProfileImage")
+                        .WithMany()
+                        .HasForeignKey("ProfileImageId");
+
+                    b.Navigation("ProfileImage");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
+                        .WithMany("PostImages")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
+                {
+                    b.Navigation("PostImages");
                 });
 #pragma warning restore 612, 618
         }
