@@ -20,7 +20,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword);
         Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId);
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
-        Task UploadProfileImageAsync(IFormFileCollection files);
+        Task<bool> UploadProfileImageAsync(string userId,IFormFile file);
 
     }
 }

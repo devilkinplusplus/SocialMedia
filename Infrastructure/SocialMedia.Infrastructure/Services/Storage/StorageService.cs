@@ -24,5 +24,8 @@ namespace SocialMedia.Infrastructure.Services.Storage
 
         public Task<List<(string fileName, string pathName)>> UploadAsync(string pathName, IFormFileCollection files)
                => _storage.UploadAsync(pathName, files);
+
+        public Task<(string fileName, string pathName)> UploadAsync(string pathName, IFormFile file)
+            => _storage.UploadAsync(pathName,file);
     }
 }

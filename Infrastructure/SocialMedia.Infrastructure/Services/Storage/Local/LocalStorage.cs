@@ -45,10 +45,24 @@ namespace SocialMedia.Infrastructure.Services.Storage.Local
                 await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
                 values.Add((fileNewName, $"{pathName}\\{fileNewName}"));
             }
-
             return values;
         }
 
+        public async Task<(string fileName, string pathName)> UploadAsync(string pathName, IFormFile file)
+        {
+            string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, pathName);
+
+            if (!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
+
+            (string fileName, string path) values = new();
+
+            string fileNewName = await FileRenameAsync(pathName, file.FileName);
+            await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
+            values.fileName = fileNewName;
+            values.path = $"{pathName}\\{fileNewName}";
+            return values;
+        }
 
         private async Task<bool> CopyFileAsync(string path, IFormFile file)
         {

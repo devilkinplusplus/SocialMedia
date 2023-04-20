@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9FpnXGJ6/HIDOezvN4R15joiaFFJhvmON8DbWfeTyDg=",
+  "Hash": "jWopzSbIaycX0Ofr+HJcyCbUTbtBH5Y6CDHdSSq9GDI=",
   "Source": "SocialMedia.Api",
   "BasePath": "_content/SocialMedia.Api",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
+      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg",
       "SourceId": "SocialMedia.Api",
       "SourceType": "Discovered",
       "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
       "BasePath": "_content/SocialMedia.Api",
-      "RelativePath": "uploads/20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
+      "RelativePath": "uploads/userImages/20230420060322facebookwordbluebackgroundhdfacebook.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -31,24 +31,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg"
-    },
-    {
-      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\2023041907270517-fener.jpg",
-      "SourceId": "SocialMedia.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
-      "BasePath": "_content/SocialMedia.Api",
-      "RelativePath": "uploads/userImages/2023041907270517-fener.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\userImages\\2023041907270517-fener.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg"
     }
   ]
 }

@@ -10,6 +10,7 @@ namespace SocialMedia.Application.Features.Commands.User.UploadProfileImage
 {
     public class UploadPICommandRequest : IRequest<UploadPICommandResponse>
     {
-        public IFormFileCollection Files { get; set; }
+        public string UserId { get; set; }
+        public IFormFile File { get; set; }
     }
 }
