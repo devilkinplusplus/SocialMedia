@@ -12,5 +12,7 @@ namespace SocialMedia.Application.Abstractions.Services
     {
         Task<LoginCommandResponse> LoginAsync(string emailOrUsername,string password);
         Task<DTOs.Token> RefreshTokenLoginAsync(string refreshToken);
+        Task<DTOs.Token> GoogleLoginAsync(string idToken);
+        Task<DTOs.Token> FacebookLoginAsync(string authToken);
     }
 }
