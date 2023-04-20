@@ -13,6 +13,7 @@ using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Repositories.ProfileImages;
 using SocialMedia.Application.Validators;
+using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
@@ -32,7 +33,8 @@ namespace SocialMedia.Persistance.Services
         private readonly IPasswordValidator<User> _passwordValidator;
         private readonly IStorageService _storageService;
         private readonly IProfileImageWriteRepository _profileImageWrite;
-        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService, IProfileImageWriteRepository profileImageWrite)
+        private readonly IProfileImageReadRepository _profileImageRead;
+        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService, IProfileImageWriteRepository profileImageWrite, IProfileImageReadRepository profileImageRead)
         {
             _userManager = userManager;
             _context = context;
@@ -40,6 +42,7 @@ namespace SocialMedia.Persistance.Services
             _passwordValidator = passwordValidator;
             _storageService = storageService;
             _profileImageWrite = profileImageWrite;
+            _profileImageRead = profileImageRead;
         }
 
         public async Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword)
@@ -80,11 +83,9 @@ namespace SocialMedia.Persistance.Services
 
         public async Task<CreateUserCommandResponse> CreateUserAsync(CreateUserDto model)
         {
-            UserValidator validations = new();
             User user = _mapper.Map<User>(model);
             user.Id = Guid.NewGuid().ToString();
-
-            ValidationResult vResults = validations.Validate(user);
+            ValidationResult vResults = await ValidateUserAsync(user);
 
             if (await IsEmailExist(user.Email))
                 return new() { Succeeded = false, Errors = new() { "Email already in use" } };
@@ -151,23 +152,26 @@ namespace SocialMedia.Persistance.Services
             return await _userManager.UpdateAsync(user);
         }
 
-        public async Task UploadProfileImageAsync(IFormFileCollection files)
+        public async Task<bool> UploadProfileImageAsync(string userId, IFormFile file)
         {
-            string pathName = "uploads\userImages";
-            var storageInfo = await _storageService.UploadAsync(pathName, files);
+            User? user = await _userManager.FindByIdAsync(userId);
+            string pathName = @"uploads\userImages";
+            var storageInfo = await _storageService.UploadAsync(pathName, file);
+            string fullPath = $"{storageInfo.pathName}/{storageInfo.fileName}";
 
-            foreach (var item in storageInfo)
+            await _profileImageWrite.AddAsync(new()
             {
-                string fullPath = $"{item.pathName}/{item.fileName}";
-                await _profileImageWrite.AddAsync(new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    FileName = item.fileName,
-                    Path = fullPath,
-                    Storage = _storageService.StorageName,
-                });
-            }
+                Id = Guid.NewGuid().ToString(),
+                FileName = storageInfo.fileName,
+                Path = fullPath,
+                Storage = _storageService.StorageName,
+            });
             await _profileImageWrite.SaveAsync();
+
+            ProfileImage prof = await _profileImageRead.GetAsync(x => x.Path == fullPath);
+            user.ProfileImageId = prof.Id;
+            IdentityResult res = await UpdateUserAsync(user);
+            return res.Succeeded;
         }
     }
 }

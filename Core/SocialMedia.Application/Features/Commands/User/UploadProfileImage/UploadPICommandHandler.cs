@@ -19,8 +19,8 @@ namespace SocialMedia.Application.Features.Commands.User.UploadProfileImage
 
         public async Task<UploadPICommandResponse> Handle(UploadPICommandRequest request, CancellationToken cancellationToken)
         {
-            await _userService.UploadProfileImageAsync(request.Files);
-            return new() { Succeeded = true };
+            var res = await _userService.UploadProfileImageAsync(request.UserId,request.File);
+            return new() { Succeeded = res };
         }
     }
 }

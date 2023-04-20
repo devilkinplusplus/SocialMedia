@@ -1,12 +1,8 @@
 {
   "Files": [
     {
-      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg",
-      "PackagePath": "staticwebassets\\uploads\\20230417174404alonewordinblackbackground4khdblack-3840x2160.jpg"
-    },
-    {
-      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\2023041907270517-fener.jpg",
-      "PackagePath": "staticwebassets\\uploads\\userImages\\2023041907270517-fener.jpg"
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg",
+      "PackagePath": "staticwebassets\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.SocialMedia.Api.Microsoft.AspNetCore.StaticWebAssets.props",
