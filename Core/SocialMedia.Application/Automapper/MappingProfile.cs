@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using SocialMedia.Application.DTOs.Post;
 using SocialMedia.Application.DTOs.User;
+using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;

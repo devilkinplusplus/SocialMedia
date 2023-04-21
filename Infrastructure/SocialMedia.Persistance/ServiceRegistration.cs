@@ -3,9 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SocialMedia.Application.Abstractions.Services;
+using SocialMedia.Application.Repositories.PostImages;
+using SocialMedia.Application.Repositories.Posts;
 using SocialMedia.Application.Repositories.ProfileImages;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Persistance.Contexts;
+using SocialMedia.Persistance.Repositories.PostImages;
+using SocialMedia.Persistance.Repositories.Posts;
 using SocialMedia.Persistance.Repositories.ProfileImages;
 using SocialMedia.Persistance.Services;
 using System;
@@ -20,7 +24,7 @@ namespace SocialMedia.Persistance
     {
         public static void AddPersistanceServices(this IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(DbConfiguration.ConnectionString));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(DbConfiguration.ConnectionString));
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -32,12 +36,19 @@ namespace SocialMedia.Persistance
             }).AddEntityFrameworkStores<AppDbContext>()
            .AddDefaultTokenProviders();
 
+            services.AddHttpClient();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IFileService,FileService>();
 
-            services.AddScoped<IProfileImageReadRepository,ProfileImageReadRepository>();
-            services.AddScoped<IProfileImageWriteRepository,ProfileImageWriteRepository>();
-
+            services.AddScoped<IProfileImageReadRepository, ProfileImageReadRepository>();
+            services.AddScoped<IProfileImageWriteRepository, ProfileImageWriteRepository>();
+            services.AddScoped<IPostReadRepository, PostReadRepository>();
+            services.AddScoped<IPostWriteRepository, PostWriteRepository>();
+            services.AddScoped<IPostImageReadRepository, PostImageReadRepository>();
+            services.AddScoped<IPostImageWriteRepository, PostImageWriteRepository>();
         }
     }
 }
