@@ -14,5 +14,6 @@ namespace SocialMedia.Domain.Entities
         public ICollection<PostImage>? PostImages { get; set; }
         public User User { get; set; }
         public string UserId { get; set; }
+        public ICollection<PostReaction> PostReactions { get; set; }
     }
 }

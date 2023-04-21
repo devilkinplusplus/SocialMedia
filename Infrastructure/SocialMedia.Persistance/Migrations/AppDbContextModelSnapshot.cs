@@ -306,6 +306,34 @@ namespace SocialMedia.Persistance.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.PostReaction", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLike")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostReactions");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
                 {
                     b.HasBaseType("SocialMedia.Domain.Entities.BaseFile");
@@ -397,6 +425,25 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.PostReaction", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
+                        .WithMany("PostReactions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
                 {
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
@@ -411,6 +458,8 @@ namespace SocialMedia.Persistance.Migrations
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
                 {
                     b.Navigation("PostImages");
+
+                    b.Navigation("PostReactions");
                 });
 #pragma warning restore 612, 618
         }
