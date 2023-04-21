@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using SocialMedia.Application.Consts;
 using SocialMedia.Domain.Entities;
 using System;
@@ -14,6 +15,7 @@ namespace SocialMedia.Application.Validators
         public PostValidator()
         {
             RuleFor(x => x.Content).MaximumLength(2500).WithMessage(Messages.MaximumSymbolMessage);
+      
         }
     }
 }

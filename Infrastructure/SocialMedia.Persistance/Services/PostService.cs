@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Application.Abstractions.Storage;
+using SocialMedia.Application.Consts;
 using SocialMedia.Application.DTOs.Post;
 using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Repositories.PostImages;
@@ -29,7 +30,6 @@ namespace SocialMedia.Persistance.Services
         {
             _postWriteRepo = postWriteRepo;
             _fileService = fileService;
-            _mapper = mapper;
         }
 
         public async Task<PostCreateCommandResponse> CreatePostAsync(CreatePostDto post)
@@ -41,21 +41,29 @@ namespace SocialMedia.Persistance.Services
                 UserId = post.UserId,
             });
 
-            ValidationResult results = await ValidatePostAsync(postEntity);
+            ValidationResult validationResults = await ValidatePostAsync(postEntity);
 
-            if (results.IsValid)
+
+            if (IsPostValid(postEntity, post.Files))
             {
-                await _postWriteRepo.SaveAsync();
+                if (validationResults.IsValid)
+                {
+                    await _postWriteRepo.SaveAsync();
 
-                if (post.Files is not null)
-                    await _fileService.WritePostImagesAsync(postEntity.Id, post.Files);
+                    if (post.Files is not null)
+                        await _fileService.WritePostImagesAsync(postEntity.Id, post.Files);
 
-                return new() { Succeeded = results.IsValid };
+                    return new() { Succeeded = validationResults.IsValid };
+                }
+                return new() { Succeeded = validationResults.IsValid,
+                               Errors = validationResults.Errors.Select(x => x.ErrorMessage).ToList() };
             }
 
-            return new() { Succeeded = results.IsValid, Errors = results.Errors.Select(x => x.ErrorMessage).ToList() };
+            return new() { Succeeded = false, Errors = new List<string>() { Messages.EmptyPostMessage } };
 
         }
+
+        private bool IsPostValid(Post post, IFormFileCollection files) => !(post.Content is null && files is null);
 
         private async Task<ValidationResult> ValidatePostAsync(Post post)
         {

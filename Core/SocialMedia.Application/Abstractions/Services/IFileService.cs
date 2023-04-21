@@ -10,7 +10,7 @@ namespace SocialMedia.Application.Abstractions.Services
 {
     public interface IFileService
     {
-        Task WritePostImagesAsync(string postId, IFormFileCollection files);
+        Task<List<PostImage>> WritePostImagesAsync(string postId, IFormFileCollection files);
         Task<ProfileImage> WriteProfileImageAsync(IFormFile file);
     }
 }
