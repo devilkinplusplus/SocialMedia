@@ -12,5 +12,6 @@ namespace SocialMedia.Application.Abstractions.Services
     {
         Task<List<PostImage>> WritePostImagesAsync(string postId, IFormFileCollection files);
         Task<ProfileImage> WriteProfileImageAsync(IFormFile file);
+        Task DeletePostImageAsync(string postImageId);
     }
 }
