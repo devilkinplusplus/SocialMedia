@@ -14,15 +14,16 @@ namespace SocialMedia.Application.Validators
         public UserValidator()
         {
             RuleFor(x=>x.FirstName).NotNull().NotEmpty().WithMessage(Messages.EmptyNameMessage).MaximumLength(25)
-                                    .WithMessage("Name must be less than 25 characters");
+                                    .WithMessage(Messages.MaximumNameSymbolMessage);
 
             RuleFor(x=>x.LastName).NotNull().NotEmpty().WithMessage(Messages.EmptyNameMessage).MaximumLength(35)
-                                    .WithMessage("Name must be less than 35 characters");
+                                    .WithMessage(Messages.MaximumLastNameSymbolMessage);
 
-            RuleFor(x => x.Email).EmailAddress().WithMessage("Email is invalid").NotNull().WithMessage("Email cannot be empty");
+            RuleFor(x => x.Email).EmailAddress().WithMessage(Messages.InvalidEmailMessage).NotNull()
+                                    .WithMessage(Messages.EmptyEmailMessage);
 
             RuleFor(x=>x.UserName).NotNull().NotEmpty().WithMessage(Messages.EmptyNameMessage).MaximumLength(16)
-                                    .WithMessage("Name must be less than 16 characters");
+                                    .WithMessage(Messages.MaximumUsernameSymbolMessage);
         }
     }
 }

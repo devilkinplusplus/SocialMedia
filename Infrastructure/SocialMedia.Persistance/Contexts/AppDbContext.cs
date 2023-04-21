@@ -7,6 +7,7 @@ using SocialMedia.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,11 @@ namespace SocialMedia.Persistance.Contexts
             }
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
 
     }

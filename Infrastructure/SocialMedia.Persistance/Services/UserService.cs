@@ -31,18 +31,14 @@ namespace SocialMedia.Persistance.Services
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPasswordValidator<User> _passwordValidator;
-        private readonly IStorageService _storageService;
-        private readonly IProfileImageWriteRepository _profileImageWrite;
-        private readonly IProfileImageReadRepository _profileImageRead;
-        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IStorageService storageService, IProfileImageWriteRepository profileImageWrite, IProfileImageReadRepository profileImageRead)
+        private readonly IFileService _fileService;
+        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IFileService fileService)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _passwordValidator = passwordValidator;
-            _storageService = storageService;
-            _profileImageWrite = profileImageWrite;
-            _profileImageRead = profileImageRead;
+            _fileService = fileService;
         }
 
         public async Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword)
@@ -152,26 +148,12 @@ namespace SocialMedia.Persistance.Services
             return await _userManager.UpdateAsync(user);
         }
 
-        public async Task<bool> UploadProfileImageAsync(string userId, IFormFile file)
+        public async Task UploadProfileImageAsync(string userId, IFormFile file)
         {
-            User? user = await _userManager.FindByIdAsync(userId);
-            string pathName = @"uploads\userImages";
-            var storageInfo = await _storageService.UploadAsync(pathName, file);
-            string fullPath = $"{storageInfo.pathName}/{storageInfo.fileName}";
-
-            await _profileImageWrite.AddAsync(new()
-            {
-                Id = Guid.NewGuid().ToString(),
-                FileName = storageInfo.fileName,
-                Path = fullPath,
-                Storage = _storageService.StorageName,
-            });
-            await _profileImageWrite.SaveAsync();
-
-            ProfileImage prof = await _profileImageRead.GetAsync(x => x.Path == fullPath);
-            user.ProfileImageId = prof.Id;
-            IdentityResult res = await UpdateUserAsync(user);
-            return res.Succeeded;
+            User user = await _userManager.FindByIdAsync(userId);
+            ProfileImage profileImage = await _fileService.WriteProfileImageAsync(file);
+            user.ProfileImageId = profileImage.Id;
+            await UpdateUserAsync(user);
         }
     }
 }

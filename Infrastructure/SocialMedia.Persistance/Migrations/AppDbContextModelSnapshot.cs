@@ -287,7 +287,6 @@ namespace SocialMedia.Persistance.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
@@ -296,7 +295,13 @@ namespace SocialMedia.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -379,6 +384,17 @@ namespace SocialMedia.Persistance.Migrations
                         .HasForeignKey("ProfileImageId");
 
                     b.Navigation("ProfileImage");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>

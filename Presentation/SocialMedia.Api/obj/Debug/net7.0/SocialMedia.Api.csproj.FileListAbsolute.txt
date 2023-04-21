@@ -97,3 +97,8 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\Soci
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\MediatR.Contracts.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\SocialMedia.Api.staticwebassets.runtime.json
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.Auth.PlatformServices.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.Auth.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.Core.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Newtonsoft.Json.dll
