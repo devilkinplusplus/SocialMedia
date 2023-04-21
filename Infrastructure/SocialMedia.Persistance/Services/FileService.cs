@@ -30,23 +30,26 @@ namespace SocialMedia.Persistance.Services
             _profileImageWrite = profileImageWrite;
         }
 
+        public async Task DeletePostImageAsync(string postImageId)
+        {
+            await _postImageWrite.RemoveAsync(postImageId);
+            await _postImageWrite.SaveAsync();
+        }
         public async Task<List<PostImage>> WritePostImagesAsync(string postId, IFormFileCollection files)
         {
             string pathName = UploadPaths.PostImagePathName;
             var storageInfo = await _storageService.UploadAsync(pathName, files);
-            string fullPath = string.Empty;
             List<PostImage> postImages = new();
 
             Post post = await _postReadRepo.GetByIdAsync(postId);
 
             foreach (var item in storageInfo)
             {
-                fullPath = $"{item.pathName}/{item.fileName}";
                 PostImage postImage = await _postImageWrite.AddEntityAsync(new()
                 {
                     Id = Guid.NewGuid().ToString(),
                     FileName = item.fileName,
-                    Path = fullPath,
+                    Path = item.pathName,
                     Storage = _storageService.StorageName,
                     PostId = post.Id
                 });
@@ -60,13 +63,12 @@ namespace SocialMedia.Persistance.Services
         {
             string pathName = UploadPaths.ProfileImagePathName;
             var storageInfo = await _storageService.UploadAsync(pathName, file);
-            string fullPath = $"{storageInfo.pathName}/{storageInfo.fileName}";
 
             ProfileImage profileImage = await _profileImageWrite.AddEntityAsync(new()
             {
                 Id = Guid.NewGuid().ToString(),
                 FileName = storageInfo.fileName,
-                Path = fullPath,
+                Path = storageInfo.pathName,
                 Storage = _storageService.StorageName,
             });
             await _profileImageWrite.SaveAsync();
