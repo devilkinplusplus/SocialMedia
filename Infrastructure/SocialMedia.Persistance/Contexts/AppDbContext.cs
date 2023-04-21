@@ -22,7 +22,7 @@ namespace SocialMedia.Persistance.Contexts
         public DbSet<BaseFile> BaseFiles { get; set; }
         public DbSet<ProfileImage> ProfileImages { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
-
+        public DbSet<PostReaction> PostReactions { get; set; }
         //Interceptor
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -18,7 +18,7 @@ namespace SocialMedia.Application.Features.Commands.Post.Archive
 
         public async Task<ArchivePostCommandResponse> Handle(ArchivePostCommandRequest request, CancellationToken cancellationToken)
         {
-            await _postService.ArchivePostAsync(request.Id);
+            await _postService.ToggleArchivePostAsync(request.Id);
             return new() { Succeeded = true };
         }
     }

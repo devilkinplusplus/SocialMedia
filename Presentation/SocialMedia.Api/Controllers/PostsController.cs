@@ -7,6 +7,7 @@ using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Delete;
 using SocialMedia.Application.Features.Commands.Post.DeletePostImage;
 using SocialMedia.Application.Features.Commands.Post.Edit;
+using SocialMedia.Application.Features.Commands.PostReaction.Like;
 using System.Security.Permissions;
 
 namespace SocialMedia.Api.Controllers
@@ -52,6 +53,13 @@ namespace SocialMedia.Api.Controllers
 
         [HttpPut("archive")]
         public async Task<IActionResult> Archive(ArchivePostCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpPost("like")]
+        public async Task<IActionResult> Like(LikePostCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
