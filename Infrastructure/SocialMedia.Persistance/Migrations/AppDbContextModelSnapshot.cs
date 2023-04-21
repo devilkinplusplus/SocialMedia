@@ -188,6 +188,38 @@ namespace SocialMedia.Persistance.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<string>("Id")
@@ -334,6 +366,38 @@ namespace SocialMedia.Persistance.Migrations
                     b.ToTable("PostReactions");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Reply", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Replies");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
                 {
                     b.HasBaseType("SocialMedia.Domain.Entities.BaseFile");
@@ -405,6 +469,25 @@ namespace SocialMedia.Persistance.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
                 {
                     b.HasOne("SocialMedia.Domain.Entities.ProfileImage", "ProfileImage")
@@ -444,6 +527,25 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Reply", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Comment", "Comment")
+                        .WithMany("Replies")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
                 {
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
@@ -453,6 +555,11 @@ namespace SocialMedia.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Comment", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>

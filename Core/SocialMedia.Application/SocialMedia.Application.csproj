@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Commands\Reply\" />
     <Folder Include="Features\Queries\User\" />
   </ItemGroup>
 
