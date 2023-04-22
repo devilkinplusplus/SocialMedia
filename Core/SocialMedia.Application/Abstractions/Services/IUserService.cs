@@ -21,6 +21,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId);
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
         Task UploadProfileImageAsync(string userId,IFormFile file);
+        Task<bool> AssignRoleAsync(string userId, string roleTypeStr);
 
     }
 }

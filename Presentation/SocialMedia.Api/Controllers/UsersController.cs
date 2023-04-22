@@ -7,11 +7,13 @@ using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.Abstractions.Storage.Local;
 using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.Auth.Login;
+using SocialMedia.Application.Features.Commands.User.AssignRole;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
+using SocialMedia.Domain.Entities.Identity;
 
 namespace SocialMedia.Api.Controllers
 {
@@ -48,7 +50,7 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer" )]
         [HttpPut]
         public async Task<IActionResult> EditUser(EditUserCommandRequest request)
         {
@@ -56,14 +58,20 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes ="Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost("upload")]
-        public async Task<IActionResult> Upload([FromForm]UploadPICommandRequest request)
+        public async Task<IActionResult> Upload([FromForm] UploadPICommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
+        [HttpPost("assignRole")]
+        public async Task<IActionResult> AssignRole(AssignRoleCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
 
     }
 }
