@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Application.DTOs;
@@ -17,10 +18,11 @@ namespace SocialMedia.Infrastructure.Services
     public class TokenHandler : ITokenHandler
     {
         private readonly IConfiguration _configuration;
-
-        public TokenHandler(IConfiguration configuration)
+        private readonly UserManager<User> _userManager;
+        public TokenHandler(IConfiguration configuration, UserManager<User> userManager)
         {
             _configuration = configuration;
+            _userManager = userManager;
         }
 
         public string CreateRefreshToken()
@@ -34,12 +36,10 @@ namespace SocialMedia.Infrastructure.Services
         public async Task<Token> CreateTokenAsync(User user)
         {
             Token token = new();
+            token.Expiration = DateTime.UtcNow.AddMinutes(30);
 
             SymmetricSecurityKey symmetricSecurity = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));
-
             SigningCredentials credentials = new(symmetricSecurity, SecurityAlgorithms.HmacSha256);
-
-            token.Expiration = DateTime.UtcNow.AddMinutes(30);
 
             JwtSecurityToken jwtSecurityToken = new(
                     audience: _configuration["Token:Audience"],
@@ -47,11 +47,7 @@ namespace SocialMedia.Infrastructure.Services
                     expires: token.Expiration,
                     notBefore: DateTime.UtcNow,
                     signingCredentials: credentials,
-                    claims: new List<Claim>
-                    {
-                        new (ClaimTypes.Email, user.Email),
-                        new(ClaimTypes.NameIdentifier, user.Id)
-                    }
+                    claims: await AddUserValuesToTokenAsync(user)
                 );
 
             JwtSecurityTokenHandler tokenHandler = new();
@@ -59,5 +55,24 @@ namespace SocialMedia.Infrastructure.Services
             token.RefreshToken = CreateRefreshToken();
             return token;
         }
+
+        private async Task<List<Claim>> AddUserValuesToTokenAsync(User user)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            foreach (string role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            return claims;
+        }
+
     }
 }

@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\uploads\\userImages\\20230421063119applewithlightflashtechnologyhdmacbook-1920x1080.jpg"
     },
     {
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230422074326Black-Simple-Text-Deskstop-Wallpaper.png",
+      "PackagePath": "staticwebassets\\uploads\\userImages\\20230422074326Black-Simple-Text-Deskstop-Wallpaper.png"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.SocialMedia.Api.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

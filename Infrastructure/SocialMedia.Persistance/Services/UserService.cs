@@ -2,26 +2,19 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Abstractions.Services;
-using SocialMedia.Application.Abstractions.Storage;
+using SocialMedia.Application.Consts;
 using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
-using SocialMedia.Application.Repositories.ProfileImages;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMedia.Persistance.Services
 {
@@ -84,14 +77,16 @@ namespace SocialMedia.Persistance.Services
             ValidationResult vResults = await ValidateUserAsync(user);
 
             if (await IsEmailExist(user.Email))
-                return new() { Succeeded = false, Errors = new() { "Email already in use" } };
+                return new() { Succeeded = false, Errors = new() { Messages.UsedEmailMessage } };
 
             if (vResults.IsValid)
             {
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
+                {
+                    await AssignRoleAsync(user.Id, RoleTypes.User.ToString());
                     return new() { Succeeded = true };
+                }
                 return new() { Succeeded = false, Errors = result.Errors.Select(x => x.Description).ToList() };
             }
 
@@ -154,6 +149,19 @@ namespace SocialMedia.Persistance.Services
             ProfileImage profileImage = await _fileService.WriteProfileImageAsync(file);
             user.ProfileImageId = profileImage.Id;
             await UpdateUserAsync(user);
+        }
+
+        public async Task<bool> AssignRoleAsync(string userId, string roleTypeStr)
+        {
+            if (!Enum.TryParse<RoleTypes>(roleTypeStr, out RoleTypes roleType))
+                return false;
+
+            User? user = await _userManager.FindByIdAsync(userId);
+            if (user is null)
+                return false;
+
+            IdentityResult res = await _userManager.AddToRoleAsync(user, roleType.ToString());
+            return res.Succeeded;
         }
     }
 }
