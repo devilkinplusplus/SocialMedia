@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SocialMedia.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace SocialMedia.Application.Features.Queries.User.GetAll
 {
     public class GetAllUsersQueryRequest:IRequest<GetAllUsersQueryResponse>
     {
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }

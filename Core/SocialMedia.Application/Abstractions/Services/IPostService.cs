@@ -5,11 +5,6 @@ using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Edit;
 using SocialMedia.Application.Features.Queries.Post.GetAll;
 using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMedia.Application.Abstractions.Services
 {
@@ -20,7 +15,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task DeletePostImageAsync(string id);
         Task<bool> DeletePostAsync(string id);
         Task ToggleArchivePostAsync(string id);
-        Task<GetAllPostsQueryResponse> GetAllPostsAsync();
-        Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId);
+        Task<GetAllPostsQueryResponse> GetAllPostsAsync(int page = 0,int size = 5);
+        Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId,int page = 0,int size = 5);
     }
 }

@@ -31,6 +31,13 @@ namespace SocialMedia.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromForm]PostCreateCommandRequest request)
         {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            request.CreatePostDto.UserId = id;
+
             var res = await _mediator.Send(request);
             return Ok(res);
         }
@@ -66,24 +73,33 @@ namespace SocialMedia.Api.Controllers
         [HttpPost("like")]
         public async Task<IActionResult> Like(LikePostCommandRequest request)
         {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            request.UserId = id;
+
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(GetAllPostsQueryRequest request)
+        public async Task<IActionResult> GetAll([FromQuery]GetAllPostsQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
         [HttpGet("myPosts")]
-        public async Task<IActionResult> GetMyPosts(GetMyPostsQueryRequest request)
+        public async Task<IActionResult> GetMyPosts([FromQuery]GetMyPostsQueryRequest request)
         {
             var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
             var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+
             request.UserId = id;
 
             var res = await _mediator.Send(request);

@@ -102,7 +102,7 @@ namespace SocialMedia.Persistance.Services
             if (user is not null)
             {
                 user.FirstName = (model.FirstName ?? user.FirstName);
-                user.LastName = (model.LastName  ?? user.LastName);
+                user.LastName = (model.LastName ?? user.LastName);
                 user.UserName = (model.UserName ?? user.UserName);
                 user.About = (model.About ?? user.About);
                 user.Date = model.Date;
@@ -170,9 +170,14 @@ namespace SocialMedia.Persistance.Services
             return res.Succeeded;
         }
 
-        public async Task<GetAllUsersQueryResponse> GetAllUsersAsync()
+        public async Task<GetAllUsersQueryResponse> GetAllUsersAsync(int page = 0, int size = 5)
         {
-            IEnumerable<User> users = await _context.Users.Include(x => x.ProfileImage).ToListAsync();
+            IEnumerable<User> users = await _context.Users.Include(x => x.ProfileImage)
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
+
+
             IEnumerable<UserListDto> userList = _mapper.Map<IEnumerable<UserListDto>>(users);
 
             if (userList.Count() == 0)
@@ -186,8 +191,8 @@ namespace SocialMedia.Persistance.Services
             User? user = await _context.Users.Include(x => x.ProfileImage).FirstOrDefaultAsync(filter);
             var finalUser = _mapper.Map<UserListDto>(user);
             if (finalUser is null)
-                return new() { Succeeded = false , Errors = new List<string>() { Messages.NoUserFoundMessage } };
-            return new() { Succeeded = true,Value = finalUser};
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
+            return new() { Succeeded = true, Value = finalUser };
         }
     }
 }

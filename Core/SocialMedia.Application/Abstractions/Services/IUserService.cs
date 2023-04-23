@@ -25,7 +25,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
         Task UploadProfileImageAsync(string userId,IFormFile file);
         Task<bool> AssignRoleAsync(string userId, string roleTypeStr);
-        Task<GetAllUsersQueryResponse> GetAllUsersAsync();
+        Task<GetAllUsersQueryResponse> GetAllUsersAsync(int page = 0, int size = 5);
         Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User,bool>> filter);
     }
 }

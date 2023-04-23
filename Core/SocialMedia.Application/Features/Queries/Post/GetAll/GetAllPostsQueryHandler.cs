@@ -18,7 +18,7 @@ namespace SocialMedia.Application.Features.Queries.Post.GetAll
 
         public async Task<GetAllPostsQueryResponse> Handle(GetAllPostsQueryRequest request, CancellationToken cancellationToken)
         {
-            return await _postService.GetAllPostsAsync();
+            return await _postService.GetAllPostsAsync(request.Page,request.Size);
         }
     }
 }
