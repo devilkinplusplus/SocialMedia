@@ -10,5 +10,7 @@ namespace SocialMedia.Application.Features.Queries.Post.GetMyPosts
     public class GetMyPostsQueryRequest : IRequest<GetMyPostsQueryResponse>
     {
         public string? UserId { get; set; }
+        public int Size { get; set; } = 5;
+        public int Page { get; set; } = 0;
     }
 }

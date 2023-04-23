@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Abstractions.Services;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace SocialMedia.Application.Features.Queries.User.GetAll
 
         public async Task<GetAllUsersQueryResponse> Handle(GetAllUsersQueryRequest request, CancellationToken cancellationToken)
         {
-            return await _userService.GetAllUsersAsync();
+            return await _userService.GetAllUsersAsync(request.Page,request.Size);
         }
     }
 }

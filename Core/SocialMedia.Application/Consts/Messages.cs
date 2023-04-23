@@ -19,6 +19,6 @@ namespace SocialMedia.Application.Consts
         public static string EmptyPostMessage = "Post cannot be empty";
         public static string EmptyCommentMessage = "Comment cannot be empty";
         public static string NoUserFoundMessage = "No user founds";
-        public static string NoProductsFoundMessage = "No products founds";
+        public static string NoPostsFoundMessage = "No posts founds";
     }
 }

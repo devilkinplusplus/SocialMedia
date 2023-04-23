@@ -76,7 +76,7 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetAllUsersQueryRequest request)
+        public async Task<IActionResult> Get([FromQuery]GetAllUsersQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);

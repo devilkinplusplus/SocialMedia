@@ -137,7 +137,7 @@ namespace SocialMedia.Persistance.Services
             return await validationRules.ValidateAsync(post);
         }
 
-        public async Task<GetAllPostsQueryResponse> GetAllPostsAsync()
+        public async Task<GetAllPostsQueryResponse> GetAllPostsAsync(int page = 0, int size = 5)
         {
             var posts = await _postReadRepo.GetAll().Include(x => x.PostImages).Include(x => x.Comments)
                 .ThenInclude(x=>x.Replies)
@@ -149,15 +149,18 @@ namespace SocialMedia.Persistance.Services
                     Files = x.PostImages.Select(x => x.Path),
                     Comments = x.Comments,
                     Likes = _postReactionService.GetPostReactions(x.Id)
-                }).ToListAsync();
+                })
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
 
             if (!posts.Any())
-                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoProductsFoundMessage } };
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage} };
 
             return new() { Succeeded = true, Values = posts };
         }
 
-        public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId)
+        public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId,int page =0,int size =5)
         {
             var posts = await _postReadRepo.GetAllWhere(x=>x.UserId == userId).Include(x => x.PostImages)
                 .Include(x => x.Comments)
@@ -170,10 +173,13 @@ namespace SocialMedia.Persistance.Services
                     Files = x.PostImages.Select(x => x.Path),
                     Comments = x.Comments,
                     Likes = _postReactionService.GetPostReactions(x.Id)
-                }).ToListAsync();
+                })
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
 
             if (!posts.Any())
-                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoProductsFoundMessage } };
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };
 
             return new() { Succeeded = true, Values = posts };
         }
