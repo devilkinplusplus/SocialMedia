@@ -10,6 +10,8 @@ using SocialMedia.Application.DTOs.Post;
 using SocialMedia.Application.Features.Commands.Post.Archive;
 using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Edit;
+using SocialMedia.Application.Features.Queries.Post.GetAll;
+using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
 using SocialMedia.Application.Repositories.PostImages;
 using SocialMedia.Application.Repositories.Posts;
 using SocialMedia.Application.Validators;
@@ -19,6 +21,7 @@ using SocialMedia.Persistance.Repositories.PostImages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,11 +32,13 @@ namespace SocialMedia.Persistance.Services
         private readonly IPostWriteRepository _postWriteRepo;
         private readonly IPostReadRepository _postReadRepo;
         private readonly IFileService _fileService;
-        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo)
+        private readonly IPostReactionService _postReactionService;
+        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo, IPostReactionService postReactionService)
         {
             _postWriteRepo = postWriteRepo;
             _fileService = fileService;
             _postReadRepo = postReadRepo;
+            _postReactionService = postReactionService;
         }
 
         public async Task ToggleArchivePostAsync(string id)
@@ -58,6 +63,7 @@ namespace SocialMedia.Persistance.Services
 
             if (IsPostValid(postEntity.Content, post.Files))
             {
+
                 if (validationResults.IsValid)
                 {
                     await _postWriteRepo.SaveAsync();
@@ -131,7 +137,45 @@ namespace SocialMedia.Persistance.Services
             return await validationRules.ValidateAsync(post);
         }
 
+        public async Task<GetAllPostsQueryResponse> GetAllPostsAsync()
+        {
+            var posts = await _postReadRepo.GetAll().Include(x => x.PostImages).Include(x => x.Comments)
+                .ThenInclude(x=>x.Replies)
+                .Select(x => new PostListDto()
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    Content = x.Content,
+                    Files = x.PostImages.Select(x => x.Path),
+                    Comments = x.Comments,
+                    Likes = _postReactionService.GetPostReactions(x.Id)
+                }).ToListAsync();
 
+            if (!posts.Any())
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoProductsFoundMessage } };
 
+            return new() { Succeeded = true, Values = posts };
+        }
+
+        public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId)
+        {
+            var posts = await _postReadRepo.GetAllWhere(x=>x.UserId == userId).Include(x => x.PostImages)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Replies)
+                .Select(x => new PostListDto()
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    Content = x.Content,
+                    Files = x.PostImages.Select(x => x.Path),
+                    Comments = x.Comments,
+                    Likes = _postReactionService.GetPostReactions(x.Id)
+                }).ToListAsync();
+
+            if (!posts.Any())
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoProductsFoundMessage } };
+
+            return new() { Succeeded = true, Values = posts };
+        }
     }
 }

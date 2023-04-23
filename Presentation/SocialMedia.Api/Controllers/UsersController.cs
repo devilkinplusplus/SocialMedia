@@ -13,6 +13,8 @@ using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
+using SocialMedia.Application.Features.Queries.User.GetAll;
+using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Domain.Entities.Identity;
 
 namespace SocialMedia.Api.Controllers
@@ -58,7 +60,7 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = nameof(RoleTypes.Moderator))]
         [HttpPost("upload")]
         public async Task<IActionResult> Upload([FromForm] UploadPICommandRequest request)
         {
@@ -73,5 +75,18 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get(GetAllUsersQueryRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet("user")]
+        public async Task<IActionResult> GetOne(GetOneUserQueryRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
     }
 }

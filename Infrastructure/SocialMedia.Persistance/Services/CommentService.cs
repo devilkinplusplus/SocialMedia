@@ -42,6 +42,7 @@ namespace SocialMedia.Persistance.Services
         public async Task DeleteCommentAsync(string commentId)
         {
             await _commentWriteRepo.RemoveAsync(commentId);
+            await _commentWriteRepo.SaveAsync();
         }
 
         private async Task<ValidationResult> ValidateCommentAsync(Comment comment)

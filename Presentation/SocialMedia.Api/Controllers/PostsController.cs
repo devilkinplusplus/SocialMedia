@@ -2,12 +2,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using SocialMedia.Application.Features.Commands.Post.Archive;
 using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Delete;
 using SocialMedia.Application.Features.Commands.Post.DeletePostImage;
 using SocialMedia.Application.Features.Commands.Post.Edit;
 using SocialMedia.Application.Features.Commands.PostReaction.Like;
+using SocialMedia.Application.Features.Queries.Post.GetAll;
+using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Permissions;
 
 namespace SocialMedia.Api.Controllers
@@ -61,6 +66,26 @@ namespace SocialMedia.Api.Controllers
         [HttpPost("like")]
         public async Task<IActionResult> Like(LikePostCommandRequest request)
         {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(GetAllPostsQueryRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet("myPosts")]
+        public async Task<IActionResult> GetMyPosts(GetMyPostsQueryRequest request)
+        {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            request.UserId = id;
+
             var res = await _mediator.Send(request);
             return Ok(res);
         }

@@ -17,11 +17,21 @@ namespace SocialMedia.Persistance.Services
         private readonly IPostReactionReadRepository _postReactionRead;
         private readonly IPostReactionWriteRepository _postReactionWrite;
         private readonly AppDbContext _context;
-        public PostReactionService(IPostReactionReadRepository postReactionRead, IPostReactionWriteRepository postReactionWrite,  AppDbContext context)
+        public PostReactionService(IPostReactionReadRepository postReactionRead, IPostReactionWriteRepository postReactionWrite, AppDbContext context)
         {
             _postReactionRead = postReactionRead;
             _postReactionWrite = postReactionWrite;
             _context = context;
+        }
+
+
+
+        public int GetPostReactions(string postId)
+        {
+            IEnumerable<PostReaction> postReactions = _postReactionRead
+                                .GetAllWhere(x => x.PostId == postId && x.IsLike == true)
+                                .ToList();
+            return postReactions.Count();
         }
 
         public async Task LikePostAsync(string userId, string postId)
@@ -48,7 +58,7 @@ namespace SocialMedia.Persistance.Services
         private async Task<bool> IsAlreadyLikedAsync(string userId, string postId)
             => await _context.PostReactions.AnyAsync(x => x.UserId == userId && x.PostId == postId);
 
-        
+
 
 
     }

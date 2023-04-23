@@ -10,11 +10,14 @@ using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
+using SocialMedia.Application.Features.Queries.User.GetAll;
+using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
+using System.Linq.Expressions;
 
 namespace SocialMedia.Persistance.Services
 {
@@ -67,7 +70,7 @@ namespace SocialMedia.Persistance.Services
                 await UpdateUserAsync(user);
                 return new() { Succeeded = true };
             }
-            throw new UserNotFoundException();
+            return new() { Succeeded = false };
         }
 
         public async Task<CreateUserCommandResponse> CreateUserAsync(CreateUserDto model)
@@ -98,14 +101,15 @@ namespace SocialMedia.Persistance.Services
             User? user = await _userManager.FindByIdAsync(model.Id);
             if (user is not null)
             {
-                user.FirstName = (model.FirstName is null ? user.FirstName : model.FirstName);
-                user.LastName = (model.LastName is null ? user.LastName : model.LastName);
-                user.UserName = (model.UserName is null ? user.UserName : model.UserName);
-                user.About = (model.About is null ? user.About : model.About);
+                user.FirstName = (model.FirstName ?? user.FirstName);
+                user.LastName = (model.LastName  ?? user.LastName);
+                user.UserName = (model.UserName ?? user.UserName);
+                user.About = (model.About ?? user.About);
                 user.Date = model.Date;
 
 
                 ValidationResult vResult = await ValidateUserAsync(user);
+
                 if (vResult.IsValid)
                 {
                     IdentityResult res = await UpdateUserAsync(user);
@@ -114,7 +118,7 @@ namespace SocialMedia.Persistance.Services
                 return new() { Succeeded = vResult.IsValid, Errors = vResult.Errors.Select(x => x.ErrorMessage).ToList() };
 
             }
-            throw new UserNotFoundException();
+            return new() { Succeeded = false };
         }
 
         private async Task<ValidationResult> ValidateUserAsync(User user)
@@ -146,7 +150,9 @@ namespace SocialMedia.Persistance.Services
         public async Task UploadProfileImageAsync(string userId, IFormFile file)
         {
             User user = await _userManager.FindByIdAsync(userId);
+
             ProfileImage profileImage = await _fileService.WriteProfileImageAsync(file);
+
             user.ProfileImageId = profileImage.Id;
             await UpdateUserAsync(user);
         }
@@ -162,6 +168,26 @@ namespace SocialMedia.Persistance.Services
 
             IdentityResult res = await _userManager.AddToRoleAsync(user, roleType.ToString());
             return res.Succeeded;
+        }
+
+        public async Task<GetAllUsersQueryResponse> GetAllUsersAsync()
+        {
+            IEnumerable<User> users = await _context.Users.Include(x => x.ProfileImage).ToListAsync();
+            IEnumerable<UserListDto> userList = _mapper.Map<IEnumerable<UserListDto>>(users);
+
+            if (userList.Count() == 0)
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
+
+            return new() { Succeeded = true, Values = userList };
+        }
+
+        public async Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter)
+        {
+            User? user = await _context.Users.Include(x => x.ProfileImage).FirstOrDefaultAsync(filter);
+            var finalUser = _mapper.Map<UserListDto>(user);
+            if (finalUser is null)
+                return new() { Succeeded = false , Errors = new List<string>() { Messages.NoUserFoundMessage } };
+            return new() { Succeeded = true,Value = finalUser};
         }
     }
 }
