@@ -53,6 +53,7 @@ namespace SocialMedia.Persistance.Services
         public async Task DeleteReplyAsync(string commentId)
         {
             await _replyWriteRepo.RemoveAsync(commentId);
+            await _replyWriteRepo.SaveAsync();
         }
     }
 }

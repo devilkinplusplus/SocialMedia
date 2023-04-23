@@ -35,13 +35,12 @@ namespace SocialMedia.Persistance.Services
             await _postImageWrite.RemoveAsync(postImageId);
             await _postImageWrite.SaveAsync();
         }
+
         public async Task<List<PostImage>> WritePostImagesAsync(string postId, IFormFileCollection files)
         {
             string pathName = UploadPaths.PostImagePathName;
             var storageInfo = await _storageService.UploadAsync(pathName, files);
             List<PostImage> postImages = new();
-
-            Post post = await _postReadRepo.GetByIdAsync(postId);
 
             foreach (var item in storageInfo)
             {
@@ -51,7 +50,7 @@ namespace SocialMedia.Persistance.Services
                     FileName = item.fileName,
                     Path = item.pathName,
                     Storage = _storageService.StorageName,
-                    PostId = post.Id
+                    PostId = postId
                 });
                 postImages.Add(postImage);
             }

@@ -4,10 +4,13 @@ using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
+using SocialMedia.Application.Features.Queries.User.GetAll;
+using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +25,7 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
         Task UploadProfileImageAsync(string userId,IFormFile file);
         Task<bool> AssignRoleAsync(string userId, string roleTypeStr);
-
+        Task<GetAllUsersQueryResponse> GetAllUsersAsync();
+        Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User,bool>> filter);
     }
 }

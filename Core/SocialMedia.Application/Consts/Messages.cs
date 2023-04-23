@@ -18,5 +18,7 @@ namespace SocialMedia.Application.Consts
         public static string MaximumUsernameSymbolMessage = "Username must be less than 16 characters";
         public static string EmptyPostMessage = "Post cannot be empty";
         public static string EmptyCommentMessage = "Comment cannot be empty";
+        public static string NoUserFoundMessage = "No user founds";
+        public static string NoProductsFoundMessage = "No products founds";
     }
 }

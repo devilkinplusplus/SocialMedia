@@ -65,6 +65,14 @@
       "PackagePath": "staticwebassets\\uploads\\postImages\\20230421105502fener.jpg"
     },
     {
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\postImages\\2023042217040217-fener.jpg",
+      "PackagePath": "staticwebassets\\uploads\\postImages\\2023042217040217-fener.jpg"
+    },
+    {
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\postImages\\20230422170402fener.jpg",
+      "PackagePath": "staticwebassets\\uploads\\postImages\\20230422170402fener.jpg"
+    },
+    {
       "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg",
       "PackagePath": "staticwebassets\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg"
     },
@@ -75,6 +83,10 @@
     {
       "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230422074326Black-Simple-Text-Deskstop-Wallpaper.png",
       "PackagePath": "staticwebassets\\uploads\\userImages\\20230422074326Black-Simple-Text-Deskstop-Wallpaper.png"
+    },
+    {
+      "Id": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230423072735fenerbahce-logo.png",
+      "PackagePath": "staticwebassets\\uploads\\userImages\\20230423072735fenerbahce-logo.png"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.SocialMedia.Api.Microsoft.AspNetCore.StaticWebAssets.props",

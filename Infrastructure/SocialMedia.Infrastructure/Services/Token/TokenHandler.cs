@@ -56,6 +56,7 @@ namespace SocialMedia.Infrastructure.Services
             return token;
         }
 
+
         private async Task<List<Claim>> AddUserValuesToTokenAsync(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
