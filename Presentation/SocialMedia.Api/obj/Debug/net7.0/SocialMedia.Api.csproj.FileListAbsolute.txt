@@ -102,3 +102,8 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\Soci
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.Auth.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Google.Apis.Core.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Newtonsoft.Json.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\Pipelines.Sockets.Unofficial.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\StackExchange.Redis.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\System.Diagnostics.PerformanceCounter.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
