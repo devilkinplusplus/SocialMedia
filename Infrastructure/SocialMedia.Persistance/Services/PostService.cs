@@ -1,29 +1,20 @@
-﻿using AutoMapper;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SocialMedia.Application.Abstractions.Caching;
 using SocialMedia.Application.Abstractions.Services;
-using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.Consts;
 using SocialMedia.Application.DTOs.Post;
-using SocialMedia.Application.Features.Commands.Post.Archive;
 using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Edit;
 using SocialMedia.Application.Features.Queries.Post.GetAll;
 using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
-using SocialMedia.Application.Repositories.PostImages;
 using SocialMedia.Application.Repositories.Posts;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities;
-using SocialMedia.Domain.Entities.Identity;
-using SocialMedia.Persistance.Repositories.PostImages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
+using SocialMedia.Application.Enums;
 
 namespace SocialMedia.Persistance.Services
 {
@@ -33,12 +24,14 @@ namespace SocialMedia.Persistance.Services
         private readonly IPostReadRepository _postReadRepo;
         private readonly IFileService _fileService;
         private readonly IPostReactionService _postReactionService;
-        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo, IPostReactionService postReactionService)
+        private readonly ICacheService _cacheService;
+        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo, IPostReactionService postReactionService, ICacheService cacheService)
         {
             _postWriteRepo = postWriteRepo;
             _fileService = fileService;
             _postReadRepo = postReadRepo;
             _postReactionService = postReactionService;
+            _cacheService = cacheService;
         }
 
         public async Task ToggleArchivePostAsync(string id)
@@ -139,8 +132,15 @@ namespace SocialMedia.Persistance.Services
 
         public async Task<GetAllPostsQueryResponse> GetAllPostsAsync(int page = 0, int size = 5)
         {
+            string cachedData = await _cacheService.GetStringAsync(KeysForCaching.Posts);
+            if (cachedData is not null)
+            {
+                var res = JsonSerializer.Deserialize<List<PostListDto>>(cachedData);
+                return new() { Succeeded = true, Values = res };
+            }
+
             var posts = await _postReadRepo.GetAll().Include(x => x.PostImages).Include(x => x.Comments)
-                .ThenInclude(x=>x.Replies)
+                .ThenInclude(x => x.Replies)
                 .Select(x => new PostListDto()
                 {
                     Id = x.Id,
@@ -154,15 +154,32 @@ namespace SocialMedia.Persistance.Services
                 .Take(size)
                 .ToListAsync();
 
+            await CachePostsAsync(posts,KeysForCaching.Posts);
+
             if (!posts.Any())
-                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage} };
+                return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };
 
             return new() { Succeeded = true, Values = posts };
         }
 
-        public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId,int page =0,int size =5)
+        private async Task CachePostsAsync(List<PostListDto> posts,string key)
         {
-            var posts = await _postReadRepo.GetAllWhere(x=>x.UserId == userId).Include(x => x.PostImages)
+            //Store cache
+            string jsonValue = JsonSerializer.Serialize(posts);
+            await _cacheService.SetStringAsync(key, jsonValue, 30, CacheExpirationType.AbsoluteExpiration);
+        }
+
+        public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId, int page = 0, int size = 5)
+        {
+            string myCachedPosts = await _cacheService.GetStringAsync(KeysForCaching.MyPosts);
+
+            if(myCachedPosts != null)
+            {
+                List<PostListDto> values = JsonSerializer.Deserialize<List<PostListDto>>(myCachedPosts);
+                return new() { Succeeded = true, Values = values };
+            }
+
+            var posts = await _postReadRepo.GetAllWhere(x => x.UserId == userId).Include(x => x.PostImages)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)
                 .Select(x => new PostListDto()
@@ -178,6 +195,8 @@ namespace SocialMedia.Persistance.Services
                 .Take(size)
                 .ToListAsync();
 
+            await CachePostsAsync(posts, KeysForCaching.MyPosts);
+         
             if (!posts.Any())
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };
 
