@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Application.Repositories.Comments;
+using SocialMedia.Application.Repositories.Follows;
 using SocialMedia.Application.Repositories.PostImages;
 using SocialMedia.Application.Repositories.PostReactions;
 using SocialMedia.Application.Repositories.Posts;
@@ -12,6 +13,7 @@ using SocialMedia.Application.Repositories.Replies;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Persistance.Contexts;
 using SocialMedia.Persistance.Repositories.Comments;
+using SocialMedia.Persistance.Repositories.Follows;
 using SocialMedia.Persistance.Repositories.PostImages;
 using SocialMedia.Persistance.Repositories.PostReactions;
 using SocialMedia.Persistance.Repositories.Posts;
@@ -51,6 +53,7 @@ namespace SocialMedia.Persistance
             services.AddScoped<IPostReactionService, PostReactionService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IFollowService,FollowService>();
 
             services.AddScoped<IProfileImageReadRepository, ProfileImageReadRepository>();
             services.AddScoped<IProfileImageWriteRepository, ProfileImageWriteRepository>();
@@ -64,6 +67,8 @@ namespace SocialMedia.Persistance
             services.AddScoped<ICommentWriteRepository,CommentWriteRepository>();
             services.AddScoped<IReplyReadRepository,ReplyReadRepository>();
             services.AddScoped<IReplyWriteRepository,ReplyWriteRepository>();
+            services.AddScoped<IFollowReadRepository,FollowReadRepository>();
+            services.AddScoped<IFollowWriteRepository,FollowWriteRepository>();
         }
     }
 }

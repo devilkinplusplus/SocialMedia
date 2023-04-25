@@ -107,3 +107,5 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\Soci
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\StackExchange.Redis.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\System.Diagnostics.PerformanceCounter.dll
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\SocialMedia.SignalR.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Presentation\SocialMedia.Api\bin\Debug\net7.0\SocialMedia.SignalR.pdb

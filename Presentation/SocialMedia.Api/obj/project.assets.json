@@ -2133,6 +2133,19 @@
         "runtime": {
           "bin/placeholder/SocialMedia.Persistance.dll": {}
         }
+      },
+      "SocialMedia.SignalR/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "SocialMedia.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SocialMedia.SignalR.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SocialMedia.SignalR.dll": {}
+        }
       }
     }
   },
@@ -5697,6 +5710,11 @@
       "type": "project",
       "path": "../../Infrastructure/SocialMedia.Persistance/SocialMedia.Persistance.csproj",
       "msbuildProject": "../../Infrastructure/SocialMedia.Persistance/SocialMedia.Persistance.csproj"
+    },
+    "SocialMedia.SignalR/1.0.0": {
+      "type": "project",
+      "path": "../../Infrastructure/SocialMedia.SignalR/SocialMedia.SignalR.csproj",
+      "msbuildProject": "../../Infrastructure/SocialMedia.SignalR/SocialMedia.SignalR.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5705,6 +5723,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.5",
       "SocialMedia.Infrastructure >= 1.0.0",
       "SocialMedia.Persistance >= 1.0.0",
+      "SocialMedia.SignalR >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -5740,6 +5759,9 @@
             },
             "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.Persistance\\SocialMedia.Persistance.csproj": {
               "projectPath": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.Persistance\\SocialMedia.Persistance.csproj"
+            },
+            "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.SignalR\\SocialMedia.SignalR.csproj": {
+              "projectPath": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Infrastructure\\SocialMedia.SignalR\\SocialMedia.SignalR.csproj"
             }
           }
         }

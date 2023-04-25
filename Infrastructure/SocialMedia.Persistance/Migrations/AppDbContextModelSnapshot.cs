@@ -220,6 +220,37 @@ namespace SocialMedia.Persistance.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Follow", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FollowerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FollowingId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("HasRequest")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFollowing")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowerId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("Follows");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<string>("Id")
@@ -472,7 +503,7 @@ namespace SocialMedia.Persistance.Migrations
             modelBuilder.Entity("SocialMedia.Domain.Entities.Comment", b =>
                 {
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -486,6 +517,25 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Follow", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "Follower")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "Following")
+                        .WithMany("Followings")
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
@@ -562,8 +612,17 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("Replies");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Identity.User", b =>
+                {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("PostImages");
 
                     b.Navigation("PostReactions");
