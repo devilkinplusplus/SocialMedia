@@ -4,6 +4,7 @@ using SocialMedia.Application;
 using SocialMedia.Infrastructure;
 using SocialMedia.Infrastructure.Services.Storage.Local;
 using SocialMedia.Persistance;
+using SocialMedia.SignalR;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistanceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddSignalRServices();
 builder.Services.AddStorage<LocalStorage>();
 
 

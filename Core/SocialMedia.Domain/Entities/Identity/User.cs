@@ -14,5 +14,7 @@ namespace SocialMedia.Domain.Entities.Identity
         public DateTime? RefreshTokenEndDate { get; set; }
         public ProfileImage? ProfileImage { get; set; }
         public string? ProfileImageId { get; set; }
+        public ICollection<Follow> Followers { get; set; }
+        public ICollection<Follow> Followings { get; set; }
     }
 }

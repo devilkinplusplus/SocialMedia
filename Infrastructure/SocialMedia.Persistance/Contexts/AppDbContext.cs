@@ -25,6 +25,7 @@ namespace SocialMedia.Persistance.Contexts
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reply> Replies { get; set; }
+        public DbSet<Follow> Follows { get; set; }
 
         //Interceptor
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -41,6 +42,18 @@ namespace SocialMedia.Persistance.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Follow>()
+                .HasOne(x => x.Follower)
+                .WithMany(x => x.Followers)
+                .HasForeignKey(x => x.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Follow>()
+                .HasOne(x => x.Following)
+                .WithMany(x => x.Followings)
+                .HasForeignKey(x => x.FollowingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 

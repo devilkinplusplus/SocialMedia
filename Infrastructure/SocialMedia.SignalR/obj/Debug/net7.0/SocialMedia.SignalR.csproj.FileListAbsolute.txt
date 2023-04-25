@@ -1,0 +1,17 @@
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.csproj.AssemblyReference.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.GeneratedMSBuildEditorConfig.editorconfig
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.AssemblyInfoInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.AssemblyInfo.cs
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.csproj.CoreCompileInputs.cache
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.SignalR.deps.json
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.SignalR.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.SignalR.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.Application.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.Domain.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.Application.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\bin\Debug\net7.0\SocialMedia.Domain.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.csproj.CopyComplete
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\refint\SocialMedia.SignalR.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\SocialMedia.SignalR.pdb
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Infrastructure\SocialMedia.SignalR\obj\Debug\net7.0\ref\SocialMedia.SignalR.dll

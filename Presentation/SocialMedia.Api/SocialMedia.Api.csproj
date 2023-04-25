@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\SocialMedia.Infrastructure\SocialMedia.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SocialMedia.Persistance\SocialMedia.Persistance.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\SocialMedia.SignalR\SocialMedia.SignalR.csproj" />
   </ItemGroup>
 
   <ItemGroup>

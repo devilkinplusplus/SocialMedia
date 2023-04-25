@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.Abstractions.Storage.Local;
@@ -16,6 +17,8 @@ using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Domain.Entities.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace SocialMedia.Api.Controllers
 {
@@ -48,6 +51,13 @@ namespace SocialMedia.Api.Controllers
         [HttpPost("changeVisibility")]
         public async Task<IActionResult> ChangeVisibility(ChangeVisibilityCommandRequest request)
         {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            request.UserId = id;
+
             var res = await _mediator.Send(request);
             return Ok(res);
         }

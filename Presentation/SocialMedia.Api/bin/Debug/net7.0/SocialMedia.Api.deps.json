@@ -12,6 +12,7 @@
           "Microsoft.EntityFrameworkCore.Design": "7.0.5",
           "SocialMedia.Infrastructure": "1.0.0",
           "SocialMedia.Persistance": "1.0.0",
+          "SocialMedia.SignalR": "1.0.0",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "runtime": {
@@ -1136,6 +1137,14 @@
         "runtime": {
           "SocialMedia.Persistance.dll": {}
         }
+      },
+      "SocialMedia.SignalR/1.0.0": {
+        "dependencies": {
+          "SocialMedia.Application": "1.0.0"
+        },
+        "runtime": {
+          "SocialMedia.SignalR.dll": {}
+        }
       }
     }
   },
@@ -2008,6 +2017,11 @@
       "sha512": ""
     },
     "SocialMedia.Persistance/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SocialMedia.SignalR/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
