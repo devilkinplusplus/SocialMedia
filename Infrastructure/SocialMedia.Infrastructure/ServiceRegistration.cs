@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SocialMedia.Application.Abstractions.Caching;
+using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Infrastructure.Services;
@@ -16,11 +17,11 @@ namespace SocialMedia.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static void AddInfrastructureServices(this IServiceCollection services,IConfiguration configuration)
+        public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddStackExchangeRedisCache(options => options.Configuration = configuration.GetConnectionString("Redis"));
             services.AddSingleton<ICacheService, CacheService>();
-           
+            services.AddScoped<IMailService, MailService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IStorageService, StorageService>();
         }

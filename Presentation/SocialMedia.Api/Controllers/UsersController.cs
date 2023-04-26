@@ -70,7 +70,7 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = nameof(RoleTypes.Moderator))]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = nameof(RoleTypes.User))]
         [HttpPost("upload")]
         public async Task<IActionResult> Upload([FromForm] UploadPICommandRequest request)
         {
