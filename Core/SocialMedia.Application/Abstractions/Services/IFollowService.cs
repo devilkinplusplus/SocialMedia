@@ -10,8 +10,10 @@ namespace SocialMedia.Application.Abstractions.Services
     public interface IFollowService
     {
         Task FollowUserAsync(string followerId,string followingId);
-
-        Task<FollowingDto> MyFollowingsAsync(string id);
+        Task<FollowingDto> GetMyFollowingsAsync(string id);
+        Task<FollowingDto> GetMyFollowersAsync(string id);
+        Task<FollowingDto> GetMyFollowRequestsAsync(string id);
+        Task AcceptFollowRequestAsync(string followerId,string followingId);
 
     }
 }
