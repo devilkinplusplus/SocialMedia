@@ -29,6 +29,17 @@ namespace SocialMedia.Persistance.Services
             _context = context;
         }
 
+        public async Task AcceptFollowRequestAsync(string followerId, string followingId)
+        {
+            Follow? value = await _followReadRepo
+                    .GetAsync(x => x.FollowerId == followerId && x.FollowingId == followingId && x.HasRequest == true);
+            
+            value.IsFollowing = true;
+            value.HasRequest = false;
+
+            await _followWriteRepo.SaveAsync();
+        }
+
         public async Task FollowUserAsync(string followerId, string followingId)
         {
             if (IsUsersValid(followerId, followingId))
@@ -48,16 +59,54 @@ namespace SocialMedia.Persistance.Services
             }
         }
 
-        public async Task<FollowingDto> MyFollowingsAsync(string id)
+        public async Task<FollowingDto> GetMyFollowersAsync(string id)
+        {
+            var followings = await _followReadRepo
+                         .GetAllWhere(x => x.FollowingId == id && x.IsFollowing == true)
+                         .Include(x => x.Follower)
+                         .ThenInclude(x => x.ProfileImage)
+                         .Select(x => new Following
+                         {
+                             FirstName = x.Follower.FirstName,
+                             LastName = x.Follower.LastName,
+                             UserName = x.Follower.UserName,
+                             ProfileImage = x.Follower.ProfileImage.Path
+                         })
+                         .ToListAsync();
+
+            return new() { FollowingCount = followings.Count, Followings = followings };
+        }
+
+        public async Task<FollowingDto> GetMyFollowingsAsync(string id)
         {
             var followings = await _followReadRepo
                         .GetAllWhere(x => x.FollowerId == id && x.IsFollowing == true)
-                        .Include(x=>x.Following)
-                        .ThenInclude(x=>x.ProfileImage)
-                        .Select(x=> new Following
+                        .Include(x => x.Following)
+                        .ThenInclude(x => x.ProfileImage)
+                        .Select(x => new Following
                         {
+                            FirstName = x.Following.FirstName,
+                            LastName = x.Following.LastName,
                             UserName = x.Following.UserName,
                             ProfileImage = x.Following.ProfileImage.Path
+                        })
+                        .ToListAsync();
+
+            return new() { FollowingCount = followings.Count, Followings = followings };
+        }
+
+        public async Task<FollowingDto> GetMyFollowRequestsAsync(string id)
+        {
+            var followings = await _followReadRepo
+                        .GetAllWhere(x => x.FollowingId == id && x.HasRequest == true)
+                        .Include(x => x.Follower)
+                        .ThenInclude(x => x.ProfileImage)
+                        .Select(x => new Following
+                        {
+                            FirstName = x.Follower.FirstName,
+                            LastName = x.Follower.LastName,
+                            UserName = x.Follower.UserName,
+                            ProfileImage = x.Follower.ProfileImage.Path
                         })
                         .ToListAsync();
 

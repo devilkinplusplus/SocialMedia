@@ -19,7 +19,7 @@ namespace SocialMedia.Application.Features.Queries.Follow.MyFollowings
 
         public async Task<MyFollowingsQueryResponse> Handle(MyFollowingsQueryRequest request, CancellationToken cancellationToken)
         {
-            var res = await _followService.MyFollowingsAsync(request.Id);
+            var res = await _followService.GetMyFollowingsAsync(request.Id);
             return new() { Succeeded = true, Value = res };
         }
     }
