@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Core;
 using SocialMedia.Application;
 using SocialMedia.Infrastructure;
 using SocialMedia.Infrastructure.Services.Storage.Local;
@@ -39,8 +41,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
+Logger logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("SqlServer"),"Logs",autoCreateSqlTable:true)
+    .Enrich.FromLogContext()
+    .MinimumLevel.Information()
+    .CreateLogger();
 
-
+builder.Host.UseSerilog(logger);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
