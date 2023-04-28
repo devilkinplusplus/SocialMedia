@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SocialMedia.Application.Abstractions.Services;
@@ -29,7 +30,8 @@ namespace SocialMedia.Persistance.Services
         private readonly IUserService _userService;
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
-        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, ITokenHandler tokenHandler, IUserService userService, AppDbContext context, IConfiguration configuration, HttpClient httpClient)
+        private readonly IMailService _mailService;
+        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, ITokenHandler tokenHandler, IUserService userService, AppDbContext context, IConfiguration configuration, HttpClient httpClient, IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +40,7 @@ namespace SocialMedia.Persistance.Services
             _context = context;
             _configuration = configuration;
             _httpClient = httpClient;
+            _mailService = mailService;
         }
 
         public async Task<LoginCommandResponse> LoginAsync(string emailOrUsername, string password)
@@ -146,5 +149,35 @@ namespace SocialMedia.Persistance.Services
             throw new Exception("Invalid external authentication.");
         }
 
+        public async Task PasswordResetAsync(string email)
+        {
+            User? user = await _userManager.FindByEmailAsync(email);
+            if (user is not null)
+            {
+                string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
+                resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
+
+                await _mailService.SendPasswordResetMailAsync(email, user.Id, resetToken);
+            }
+        }
+
+        public async Task<bool> VerifyResetTokenAsync(string resetToken, string userId)
+        {
+            User? user = await _userManager.FindByIdAsync(userId);
+
+            if (user is not null)
+            {
+                byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+                resetToken = Encoding.UTF8.GetString(tokenBytes);
+
+
+                return await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider,
+                                                                        "ResetPassword", resetToken);
+            }
+
+            return false;
+        }
     }
 }

@@ -43,5 +43,20 @@ namespace SocialMedia.Infrastructure.Services
 
             await smtpClient.SendMailAsync(mail);
         }
+
+        public async Task SendPasswordResetMailAsync(string to, string userId, string resetToken)
+        {
+            StringBuilder mail = new();
+            mail.AppendLine("Hello<br>If you have requested a new password, you can renew your password from the link below.<br><strong><a target=\"_blank\" href=\"");
+
+            mail.AppendLine(_configuration["AngularClientUrl"]);
+            mail.AppendLine("/update-password/");
+            mail.AppendLine(userId);
+            mail.AppendLine("/");
+            mail.AppendLine(resetToken);
+            mail.AppendLine("\">Click for new password request...</a></strong><br><br><span style=\"font-size:12px;\">NOTE : If this request has not been fulfilled by you, please do not take this e-mail seriously..</span><br>Regards...<br><br><br>Together Email Support");
+
+            await SendMailAsync(to, "Password Renewal Request", mail.ToString());
+        }
     }
 }

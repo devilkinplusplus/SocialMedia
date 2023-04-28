@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Application.Abstractions.Services;
+using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Application.Features.Commands.Auth.FacebookLogin;
 using SocialMedia.Application.Features.Commands.Auth.GoogleLogin;
 using SocialMedia.Application.Features.Commands.Auth.Login;
@@ -15,7 +16,6 @@ namespace SocialMedia.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
         public AuthController(IMediator mediator)
         {
             _mediator = mediator;
@@ -26,7 +26,6 @@ namespace SocialMedia.Api.Controllers
             var res = await _mediator.Send(request);
             return Ok(res);
         }
-
 
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(RefreshTokenLoginCommandRequest request)
@@ -48,6 +47,8 @@ namespace SocialMedia.Api.Controllers
             var response = await _mediator.Send(request);
             return Ok(response);
         }
+
+   
 
     }
 }
