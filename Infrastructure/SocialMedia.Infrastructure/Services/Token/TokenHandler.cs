@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Application.DTOs;
@@ -56,7 +60,6 @@ namespace SocialMedia.Infrastructure.Services
             return token;
         }
 
-
         private async Task<List<Claim>> AddUserValuesToTokenAsync(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -74,6 +77,7 @@ namespace SocialMedia.Infrastructure.Services
 
             return claims;
         }
+
 
     }
 }
