@@ -33,7 +33,7 @@ namespace SocialMedia.Persistance.Services
         {
             Follow? value = await _followReadRepo
                     .GetAsync(x => x.FollowerId == followerId && x.FollowingId == followingId && x.HasRequest == true);
-            
+
             value.IsFollowing = true;
             value.HasRequest = false;
 
@@ -59,7 +59,7 @@ namespace SocialMedia.Persistance.Services
             }
         }
 
-        public async Task<FollowingDto> GetMyFollowersAsync(string id)
+        public async Task<FollowingDto> GetMyFollowersAsync(string id, int page = 0, int size = 5)
         {
             var followings = await _followReadRepo
                          .GetAllWhere(x => x.FollowingId == id && x.IsFollowing == true)
@@ -72,12 +72,14 @@ namespace SocialMedia.Persistance.Services
                              UserName = x.Follower.UserName,
                              ProfileImage = x.Follower.ProfileImage.Path
                          })
+                         .Skip(page*size)
+                         .Take(size)
                          .ToListAsync();
 
             return new() { FollowingCount = followings.Count, Followings = followings };
         }
 
-        public async Task<FollowingDto> GetMyFollowingsAsync(string id)
+        public async Task<FollowingDto> GetMyFollowingsAsync(string id, int page = 0, int size = 5)
         {
             var followings = await _followReadRepo
                         .GetAllWhere(x => x.FollowerId == id && x.IsFollowing == true)
@@ -90,12 +92,14 @@ namespace SocialMedia.Persistance.Services
                             UserName = x.Following.UserName,
                             ProfileImage = x.Following.ProfileImage.Path
                         })
+                        .Skip(page * size)
+                        .Take(size)
                         .ToListAsync();
 
             return new() { FollowingCount = followings.Count, Followings = followings };
         }
 
-        public async Task<FollowingDto> GetMyFollowRequestsAsync(string id)
+        public async Task<FollowingDto> GetMyFollowRequestsAsync(string id, int page = 0, int size = 5)
         {
             var followings = await _followReadRepo
                         .GetAllWhere(x => x.FollowingId == id && x.HasRequest == true)
@@ -108,6 +112,8 @@ namespace SocialMedia.Persistance.Services
                             UserName = x.Follower.UserName,
                             ProfileImage = x.Follower.ProfileImage.Path
                         })
+                        .Skip(page * size)
+                        .Take(size)
                         .ToListAsync();
 
             return new() { FollowingCount = followings.Count, Followings = followings };

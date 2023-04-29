@@ -15,6 +15,7 @@ namespace SocialMedia.SignalR
         {
             services.AddSignalR();
             services.AddTransient<IMessageHubService, MessageHubService>();
+            services.AddTransient<INotificationHubService, NotificationHubService>();
         }
     }
 }

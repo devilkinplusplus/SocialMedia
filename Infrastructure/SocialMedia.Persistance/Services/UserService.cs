@@ -3,9 +3,11 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SocialMedia.Application.Abstractions.Caching;
 using SocialMedia.Application.Abstractions.Services;
 using SocialMedia.Application.Consts;
 using SocialMedia.Application.DTOs.User;
+using SocialMedia.Application.Enums;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
@@ -121,13 +123,6 @@ namespace SocialMedia.Persistance.Services
             return new() { Succeeded = false };
         }
 
-        private async Task<ValidationResult> ValidateUserAsync(User user)
-        {
-            UserValidator validationRules = new();
-            ValidationResult result = await validationRules.ValidateAsync(user);
-            return result;
-        }
-
         public async Task UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenDate)
         {
             if (user is not null)
@@ -150,7 +145,6 @@ namespace SocialMedia.Persistance.Services
         public async Task UploadProfileImageAsync(string userId, IFormFile file)
         {
             User user = await _userManager.FindByIdAsync(userId);
-
             ProfileImage profileImage = await _fileService.WriteProfileImageAsync(file);
 
             user.ProfileImageId = profileImage.Id;
@@ -193,6 +187,12 @@ namespace SocialMedia.Persistance.Services
             if (finalUser is null)
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
             return new() { Succeeded = true, Value = finalUser };
+        }
+        private async Task<ValidationResult> ValidateUserAsync(User user)
+        {
+            UserValidator validationRules = new();
+            ValidationResult result = await validationRules.ValidateAsync(user);
+            return result;
         }
     }
 }
