@@ -65,5 +65,7 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+app.MapHubs();
+
 
 app.Run();

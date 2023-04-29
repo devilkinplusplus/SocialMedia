@@ -11,6 +11,7 @@ using SocialMedia.Application.Features.Commands.Post.Edit;
 using SocialMedia.Application.Features.Commands.PostReaction.Like;
 using SocialMedia.Application.Features.Queries.Post.GetAll;
 using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
+using SocialMedia.Domain.Entities.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Permissions;
@@ -19,7 +20,7 @@ namespace SocialMedia.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer",Roles = nameof(RoleTypes.User))]
     public class PostsController : ControllerBase
     {
         private readonly IMediator _mediator;

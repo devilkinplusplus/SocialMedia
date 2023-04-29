@@ -18,7 +18,7 @@ namespace SocialMedia.Application.Features.Queries.Follow.MyFollowers
 
         public async Task<GetMyFollowersQueryResponse> Handle(GetMyFollowersQueryRequest request, CancellationToken cancellationToken)
         {
-            var res = await _followService.GetMyFollowersAsync(request.Id);
+            var res = await _followService.GetMyFollowersAsync(request.Id,request.Page,request.Size);
             return new() { Succeeded = true,Value = res};
         }
     }

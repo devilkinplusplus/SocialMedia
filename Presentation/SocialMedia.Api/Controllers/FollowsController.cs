@@ -39,10 +39,9 @@ namespace SocialMedia.Api.Controllers
             return Ok();
         }
 
-
       
         [HttpGet("myFollowings")]
-        public async Task<IActionResult> Get(MyFollowingsQueryRequest request)
+        public async Task<IActionResult> Get([FromQuery]MyFollowingsQueryRequest request)
         {
             var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var handler = new JwtSecurityTokenHandler();
@@ -56,7 +55,7 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpGet("myFollowers")]
-        public async Task<IActionResult> GetFollowers(GetMyFollowersQueryRequest request)
+        public async Task<IActionResult> GetFollowers([FromQuery]GetMyFollowersQueryRequest request)
         {
             var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var handler = new JwtSecurityTokenHandler();
@@ -70,7 +69,7 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpGet("followRequests")]
-        public async Task<IActionResult> GetFollowRequests(FollowRequestQueryRequest request)
+        public async Task<IActionResult> GetFollowRequests([FromQuery] FollowRequestQueryRequest request)
         {
             var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var handler = new JwtSecurityTokenHandler();

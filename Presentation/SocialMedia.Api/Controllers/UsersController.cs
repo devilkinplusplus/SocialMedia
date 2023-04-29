@@ -24,6 +24,7 @@ namespace SocialMedia.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer",Roles = nameof(RoleTypes.User))]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -33,13 +34,13 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(CreateUserCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommandRequest request)
         {
@@ -47,7 +48,6 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost("changeVisibility")]
         public async Task<IActionResult> ChangeVisibility(ChangeVisibilityCommandRequest request)
         {
@@ -62,7 +62,6 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer" )]
         [HttpPut]
         public async Task<IActionResult> EditUser(EditUserCommandRequest request)
         {
@@ -70,7 +69,6 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = nameof(RoleTypes.User))]
         [HttpPost("upload")]
         public async Task<IActionResult> Upload([FromForm] UploadPICommandRequest request)
         {

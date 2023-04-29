@@ -124,12 +124,6 @@ namespace SocialMedia.Persistance.Services
 
         private bool IsPostValid(string content, IFormFileCollection files) => !(content is null && files is null);
 
-        private async Task<ValidationResult> ValidatePostAsync(Post post)
-        {
-            PostValidator validationRules = new();
-            return await validationRules.ValidateAsync(post);
-        }
-
         public async Task<GetAllPostsQueryResponse> GetAllPostsAsync(int page = 0, int size = 5)
         {
             string cachedData = await _cacheService.GetStringAsync(KeysForCaching.Posts);
@@ -154,7 +148,7 @@ namespace SocialMedia.Persistance.Services
                 .Take(size)
                 .ToListAsync();
 
-            await CachePostsAsync(posts,KeysForCaching.Posts);
+            await CachePostsAsync(posts, KeysForCaching.Posts);
 
             if (!posts.Any())
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };
@@ -162,18 +156,11 @@ namespace SocialMedia.Persistance.Services
             return new() { Succeeded = true, Values = posts };
         }
 
-        private async Task CachePostsAsync(List<PostListDto> posts,string key)
-        {
-            //Store cache
-            string jsonValue = JsonSerializer.Serialize(posts);
-            await _cacheService.SetStringAsync(key, jsonValue, 30, CacheExpirationType.AbsoluteExpiration);
-        }
-
         public async Task<GetMyPostsQueryResponse> GetMyPostsAsync(string userId, int page = 0, int size = 5)
         {
             string myCachedPosts = await _cacheService.GetStringAsync(KeysForCaching.MyPosts);
 
-            if(myCachedPosts != null)
+            if (myCachedPosts != null)
             {
                 List<PostListDto> values = JsonSerializer.Deserialize<List<PostListDto>>(myCachedPosts);
                 return new() { Succeeded = true, Values = values };
@@ -196,11 +183,24 @@ namespace SocialMedia.Persistance.Services
                 .ToListAsync();
 
             await CachePostsAsync(posts, KeysForCaching.MyPosts);
-         
+
             if (!posts.Any())
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };
 
             return new() { Succeeded = true, Values = posts };
         }
+
+        private async Task<ValidationResult> ValidatePostAsync(Post post)
+        {
+            PostValidator validationRules = new();
+            return await validationRules.ValidateAsync(post);
+        }
+        private async Task CachePostsAsync(List<PostListDto> posts, string key)
+        {
+            //Store cache
+            string jsonValue = JsonSerializer.Serialize(posts);
+            await _cacheService.SetStringAsync(key, jsonValue, 30, CacheExpirationType.AbsoluteExpiration);
+        }
+
     }
 }

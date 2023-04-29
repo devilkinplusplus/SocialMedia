@@ -7,13 +7,14 @@ using SocialMedia.Application.Features.Commands.Comment.Create;
 using SocialMedia.Application.Features.Commands.Comment.Delete;
 using SocialMedia.Application.Features.Commands.Reply.Create;
 using SocialMedia.Application.Features.Commands.Reply.Delete;
+using SocialMedia.Domain.Entities.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace SocialMedia.Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer",Roles = nameof(RoleTypes.User))]
     [ApiController]
     public class CommentsController : ControllerBase
     {

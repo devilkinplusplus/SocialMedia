@@ -35,7 +35,6 @@ namespace SocialMedia.Persistance.Services
             await _postImageWrite.RemoveAsync(postImageId);
             await _postImageWrite.SaveAsync();
         }
-
         public async Task<List<PostImage>> WritePostImagesAsync(string postId, IFormFileCollection files)
         {
             string pathName = UploadPaths.PostImagePathName;
