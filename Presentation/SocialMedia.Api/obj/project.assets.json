@@ -1678,6 +1678,25 @@
           }
         }
       },
+      "Serilog.Sinks.Seq/5.2.2": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.12.0",
+          "Serilog.Formatting.Compact": "1.1.0",
+          "Serilog.Sinks.File": "5.0.0",
+          "Serilog.Sinks.PeriodicBatching": "3.1.0"
+        },
+        "compile": {
+          "lib/net5.0/Serilog.Sinks.Seq.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Serilog.Sinks.Seq.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "StackExchange.Redis/2.2.4": {
         "type": "package",
         "dependencies": {
@@ -4635,6 +4654,30 @@
         "serilog.sinks.periodicbatching.nuspec"
       ]
     },
+    "Serilog.Sinks.Seq/5.2.2": {
+      "sha512": "1Csmo5ua7NKUe0yXUx+zsRefjAniPWcXFhUXxXG8pwo0iMiw2gjn9SOkgYnnxbgWqmlGv236w0N/dHc2v5XwMg==",
+      "type": "package",
+      "path": "serilog.sinks.seq/5.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net45/Serilog.Sinks.Seq.dll",
+        "lib/net45/Serilog.Sinks.Seq.xml",
+        "lib/net5.0/Serilog.Sinks.Seq.dll",
+        "lib/net5.0/Serilog.Sinks.Seq.xml",
+        "lib/netcoreapp3.1/Serilog.Sinks.Seq.dll",
+        "lib/netcoreapp3.1/Serilog.Sinks.Seq.xml",
+        "lib/netstandard1.1/Serilog.Sinks.Seq.dll",
+        "lib/netstandard1.1/Serilog.Sinks.Seq.xml",
+        "lib/netstandard1.3/Serilog.Sinks.Seq.dll",
+        "lib/netstandard1.3/Serilog.Sinks.Seq.xml",
+        "lib/netstandard2.0/Serilog.Sinks.Seq.dll",
+        "lib/netstandard2.0/Serilog.Sinks.Seq.xml",
+        "serilog.sinks.seq.5.2.2.nupkg.sha512",
+        "serilog.sinks.seq.nuspec"
+      ]
+    },
     "StackExchange.Redis/2.2.4": {
       "sha512": "wM0OuRyRaZTFndFRjIOvas4jjkeclRJsmNm0eAx5tOju3SQisrLubNaSFT/dBypi4Vh1n7nYc1gWpw9L7ernOg==",
       "type": "package",
@@ -6201,6 +6244,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.5",
       "Serilog.AspNetCore >= 6.1.0",
       "Serilog.Sinks.MSSqlServer >= 6.3.0",
+      "Serilog.Sinks.Seq >= 5.2.2",
       "SocialMedia.Infrastructure >= 1.0.0",
       "SocialMedia.Persistance >= 1.0.0",
       "SocialMedia.SignalR >= 1.0.0",
@@ -6273,6 +6317,10 @@
           "Serilog.Sinks.MSSqlServer": {
             "target": "Package",
             "version": "[6.3.0, )"
+          },
+          "Serilog.Sinks.Seq": {
+            "target": "Package",
+            "version": "[5.2.2, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

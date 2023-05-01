@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1f1iHloV4hnA5taOqaDKnyOITGpgYFHv1c9UFbtxI4yGjKa+dKvCXLBsjyLTP/pNxZYR466fQZ2nKTaUOkKbzQ==",
+  "dgSpecHash": "sZApAn+xTyRLATTvMeFzjP5tbqaQcS1mQgiS14uNWafzbf/jLZrmo/3of6ODaCZMnzvfXYeiWqHHO5haHtJfJQ==",
   "success": true,
   "projectFilePath": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\SocialMedia.Api.csproj",
   "expectedPackageFiles": [
@@ -100,6 +100,7 @@
     "C:\\Users\\user\\.nuget\\packages\\serilog.sinks.file\\5.0.0\\serilog.sinks.file.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\serilog.sinks.mssqlserver\\6.3.0\\serilog.sinks.mssqlserver.6.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\serilog.sinks.periodicbatching\\3.1.0\\serilog.sinks.periodicbatching.3.1.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\serilog.sinks.seq\\5.2.2\\serilog.sinks.seq.5.2.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\stackexchange.redis\\2.2.4\\stackexchange.redis.2.2.4.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
