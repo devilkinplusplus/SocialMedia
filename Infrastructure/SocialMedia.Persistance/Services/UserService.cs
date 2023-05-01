@@ -62,7 +62,6 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Succeeded = false };
         }
-
         public async Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId)
         {
             User? user = await _userManager.FindByIdAsync(userId);
@@ -179,7 +178,6 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Succeeded = true, Values = userList };
         }
-
         public async Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter)
         {
             User? user = await _context.Users.Include(x => x.ProfileImage).FirstOrDefaultAsync(filter);
