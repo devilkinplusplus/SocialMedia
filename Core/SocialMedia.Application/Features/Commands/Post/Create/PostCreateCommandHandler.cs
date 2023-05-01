@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using SocialMedia.Application.Abstractions.Services;
 using System;
 using System.Collections.Generic;
