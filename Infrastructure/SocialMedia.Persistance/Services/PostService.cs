@@ -15,6 +15,7 @@ using SocialMedia.Domain.Entities;
 using System.Text;
 using System.Text.Json;
 using SocialMedia.Application.Enums;
+using SocialMedia.Domain.Exceptions;
 
 namespace SocialMedia.Persistance.Services
 {
@@ -44,6 +45,9 @@ namespace SocialMedia.Persistance.Services
 
         public async Task<PostCreateCommandResponse> CreatePostAsync(CreatePostDto post)
         {
+            if (post.UserId is null)
+                return new PostCreateCommandResponse() { Succeeded = false };
+
             Post postEntity = await _postWriteRepo.AddEntityAsync(new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -56,7 +60,6 @@ namespace SocialMedia.Persistance.Services
 
             if (IsPostValid(postEntity.Content, post.Files))
             {
-
                 if (validationResults.IsValid)
                 {
                     await _postWriteRepo.SaveAsync();
