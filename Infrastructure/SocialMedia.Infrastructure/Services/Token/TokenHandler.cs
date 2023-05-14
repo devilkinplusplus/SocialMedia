@@ -40,7 +40,7 @@ namespace SocialMedia.Infrastructure.Services
         public async Task<Token> CreateTokenAsync(User user)
         {
             Token token = new();
-            token.Expiration = DateTime.UtcNow.AddMinutes(30);
+            token.Expiration = DateTime.UtcNow.AddHours(1);
 
             SymmetricSecurityKey symmetricSecurity = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));
             SigningCredentials credentials = new(symmetricSecurity, SecurityAlgorithms.HmacSha256);

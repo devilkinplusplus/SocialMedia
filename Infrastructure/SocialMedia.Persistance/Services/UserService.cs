@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Abstractions.Caching;
 using SocialMedia.Application.Abstractions.Services;
@@ -20,6 +21,7 @@ using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace SocialMedia.Persistance.Services
 {
@@ -191,6 +193,21 @@ namespace SocialMedia.Persistance.Services
             UserValidator validationRules = new();
             ValidationResult result = await validationRules.ValidateAsync(user);
             return result;
+        }
+
+        public async Task UpdatePasswordAsync(string userId, string newPassword, string resetToken)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user is not null)
+            {
+                byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+                resetToken = Encoding.UTF8.GetString(tokenBytes);
+                IdentityResult result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+                if (result.Succeeded)
+                    await _userManager.UpdateSecurityStampAsync(user);
+                else
+                    throw new PasswordChangeFailedException();
+            }
         }
     }
 }

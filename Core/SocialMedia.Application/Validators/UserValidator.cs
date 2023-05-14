@@ -19,7 +19,7 @@ namespace SocialMedia.Application.Validators
             RuleFor(x=>x.LastName).NotNull().NotEmpty().WithMessage(Messages.EmptyNameMessage).MaximumLength(35)
                                     .WithMessage(Messages.MaximumLastNameSymbolMessage);
 
-            RuleFor(x => x.Email).EmailAddress().WithMessage(Messages.InvalidEmailMessage).NotNull()
+            RuleFor(x => x.Email).EmailAddress().WithMessage(Messages.InvalidEmailMessage).NotNull().NotEmpty()
                                     .WithMessage(Messages.EmptyEmailMessage);
 
             RuleFor(x=>x.UserName).NotNull().NotEmpty().WithMessage(Messages.EmptyNameMessage).MaximumLength(16)
