@@ -13,6 +13,7 @@ using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
 using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
+using SocialMedia.Application.Features.Commands.User.ResetPassword;
 using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
@@ -92,6 +93,14 @@ namespace SocialMedia.Api.Controllers
 
         [HttpGet("user")]
         public async Task<IActionResult> GetOne(GetOneUserQueryRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpPost("resetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);

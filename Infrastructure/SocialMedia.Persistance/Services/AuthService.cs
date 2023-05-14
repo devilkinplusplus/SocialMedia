@@ -138,7 +138,7 @@ namespace SocialMedia.Persistance.Services
                 }
             }
 
-            if (result)
+            if (result || user is not null)
             {
                 await _userManager.AddLoginAsync(user, info); //AspNetUserLogins
 
@@ -171,7 +171,6 @@ namespace SocialMedia.Persistance.Services
             {
                 byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
                 resetToken = Encoding.UTF8.GetString(tokenBytes);
-
 
                 return await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider,
                                                                         "ResetPassword", resetToken);

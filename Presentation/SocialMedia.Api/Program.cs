@@ -27,6 +27,10 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddSignalRServices();
 builder.Services.AddStorage<LocalStorage>();
 
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+    policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+));
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Bearer", options =>
@@ -89,8 +93,9 @@ if (app.Environment.IsDevelopment())
 }
 app.UseSerilogRequestLogging();
 
-app.UseStaticFiles();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

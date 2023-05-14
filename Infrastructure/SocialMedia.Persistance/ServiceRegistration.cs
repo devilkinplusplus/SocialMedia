@@ -42,7 +42,7 @@ namespace SocialMedia.Persistance
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<AppDbContext>()
-           .AddDefaultTokenProviders();
+              .AddDefaultTokenProviders();
 
             services.AddHttpClient();
 

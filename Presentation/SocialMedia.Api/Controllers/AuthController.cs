@@ -7,7 +7,9 @@ using SocialMedia.Application.Abstractions.Token;
 using SocialMedia.Application.Features.Commands.Auth.FacebookLogin;
 using SocialMedia.Application.Features.Commands.Auth.GoogleLogin;
 using SocialMedia.Application.Features.Commands.Auth.Login;
+using SocialMedia.Application.Features.Commands.Auth.PasswordReset;
 using SocialMedia.Application.Features.Commands.Auth.RefreshTokenLogin;
+using SocialMedia.Application.Features.Commands.Auth.VerifyToken;
 
 namespace SocialMedia.Api.Controllers
 {
@@ -27,7 +29,7 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [HttpPost("refreshToken")]
+        [HttpPost("refreshTokenLogin")]
         public async Task<IActionResult> RefreshToken(RefreshTokenLoginCommandRequest request)
         {
             var res = await _mediator.Send(request);
@@ -48,6 +50,20 @@ namespace SocialMedia.Api.Controllers
             return Ok(response);
         }
 
-   
+        [HttpPost("passwordReset")]
+        public async Task<IActionResult> PasswordReset(PasswordResetCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpPost("verifyResetToken")]
+        public async Task<IActionResult> VerifyToken(VerifyResetTokenCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+
     }
 }

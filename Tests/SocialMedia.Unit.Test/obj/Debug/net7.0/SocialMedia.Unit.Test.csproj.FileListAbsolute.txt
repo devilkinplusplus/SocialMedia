@@ -196,3 +196,4 @@ F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Tests\SocialMedia
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Tests\SocialMedia.Unit.Test\obj\Debug\net7.0\SocialMedia.Unit.Test.pdb
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Tests\SocialMedia.Unit.Test\obj\Debug\net7.0\SocialMedia.Unit.Test.genruntimeconfig.cache
 F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Tests\SocialMedia.Unit.Test\obj\Debug\net7.0\ref\SocialMedia.Unit.Test.dll
+F:\VsCode\Projects\FullStack\SocialNetwork\backend\SocialMedia\Tests\SocialMedia.Unit.Test\bin\Debug\net7.0\Serilog.Sinks.Seq.dll

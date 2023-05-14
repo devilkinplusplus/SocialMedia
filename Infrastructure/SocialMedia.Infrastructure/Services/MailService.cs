@@ -32,7 +32,7 @@ namespace SocialMedia.Infrastructure.Services
             mail.Body = body;
             foreach (var item in to)
                 mail.To.Add(item);
-            mail.From = new(_configuration["Mail:Username"], "Connectify Social Media", Encoding.UTF8);
+            mail.From = new(_configuration["Mail:Username"], "Connectfy Social Media", Encoding.UTF8);
 
             //Send this mail
             SmtpClient smtpClient = new();
@@ -47,14 +47,14 @@ namespace SocialMedia.Infrastructure.Services
         public async Task SendPasswordResetMailAsync(string to, string userId, string resetToken)
         {
             StringBuilder mail = new();
-            mail.AppendLine("Hello<br>If you have requested a new password, you can renew your password from the link below.<br><strong><a target=\"_blank\" href=\"");
+            mail.Append("Hello<br>If you have requested a new password, you can renew your password from the link below.<br><strong> <a target=\"_blank\" href=\"");
 
-            mail.AppendLine(_configuration["AngularClientUrl"]);
-            mail.AppendLine("/update-password/");
-            mail.AppendLine(userId);
-            mail.AppendLine("/");
-            mail.AppendLine(resetToken);
-            mail.AppendLine("\">Click for new password request...</a></strong><br><br><span style=\"font-size:12px;\">NOTE : If this request has not been fulfilled by you, please do not take this e-mail seriously..</span><br>Regards...<br><br><br>Together Email Support");
+            mail.Append(_configuration["Client:AngularClientUrl"]);
+            mail.Append("/changePassword/");
+            mail.Append(userId);
+            mail.Append("/");
+            mail.Append(resetToken);
+            mail.AppendLine("\">Click for new password request...</a></strong><br><br><span style=\"font-size:12px;\">NOTE : If this request has not been fulfilled by you, please do not take this mail seriously.</span><br>Regards...<br><br><br>Connectfy Email Support");
 
             await SendMailAsync(to, "Password Renewal Request", mail.ToString());
         }

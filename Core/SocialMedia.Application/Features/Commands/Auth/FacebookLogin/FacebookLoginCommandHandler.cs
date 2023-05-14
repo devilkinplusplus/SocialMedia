@@ -20,7 +20,7 @@ namespace SocialMedia.Application.Features.Commands.Auth.FacebookLogin
         public async Task<FacebookLoginCommandResponse> Handle(FacebookLoginCommandRequest request, CancellationToken cancellationToken)
         {
             Token token =  await _authService.FacebookLoginAsync(request.AuthToken);
-            return new() { Token = token };
+            return new() { Token = token ,Succeeded = true };
         }
     }
 }
