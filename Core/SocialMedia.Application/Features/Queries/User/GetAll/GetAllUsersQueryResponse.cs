@@ -9,5 +9,6 @@ namespace SocialMedia.Application.Features.Queries.User.GetAll
 {
     public class GetAllUsersQueryResponse :BaseQueryListResponse<UserListDto>
     {
+        public int UserCount { get; set; }
     }
 }

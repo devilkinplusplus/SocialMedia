@@ -15,6 +15,7 @@ using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
+using SocialMedia.Application.Features.Queries.User.GetUserRoles;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
@@ -32,13 +33,15 @@ namespace SocialMedia.Persistance.Services
         private readonly IMapper _mapper;
         private readonly IPasswordValidator<User> _passwordValidator;
         private readonly IFileService _fileService;
-        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IFileService fileService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IFileService fileService, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _passwordValidator = passwordValidator;
             _fileService = fileService;
+            _roleManager = roleManager;
         }
 
         public async Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword)
@@ -172,13 +175,14 @@ namespace SocialMedia.Persistance.Services
                 .Take(size)
                 .ToListAsync();
 
+            int countOfAllUsers = await _context.Users.CountAsync();
 
             IEnumerable<UserListDto> userList = _mapper.Map<IEnumerable<UserListDto>>(users);
 
             if (userList.Count() == 0)
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
 
-            return new() { Succeeded = true, Values = userList };
+            return new() { Succeeded = true, Values = userList, UserCount = countOfAllUsers };
         }
         public async Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter)
         {
@@ -208,6 +212,16 @@ namespace SocialMedia.Persistance.Services
                 else
                     throw new PasswordChangeFailedException();
             }
+        }
+
+        public async Task<GetUserRolesQueryResponse> GetNonUserRolesAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var nonUserRoles = _roleManager.Roles.Select(role => role.Name).ToList().Except(userRoles);
+
+            return new() { Values = nonUserRoles, Succeeded = true };
         }
     }
 }
