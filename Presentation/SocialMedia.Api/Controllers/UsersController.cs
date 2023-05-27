@@ -17,6 +17,7 @@ using SocialMedia.Application.Features.Commands.User.ResetPassword;
 using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
+using SocialMedia.Application.Features.Queries.User.GetUserRoles;
 using SocialMedia.Domain.Entities.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -79,6 +80,12 @@ namespace SocialMedia.Api.Controllers
 
         [HttpPost("assignRole")]
         public async Task<IActionResult> AssignRole(AssignRoleCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+        [HttpGet("userRoles")]
+        public async Task<IActionResult> GetUserWithRoles([FromQuery]GetUserRolesQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
