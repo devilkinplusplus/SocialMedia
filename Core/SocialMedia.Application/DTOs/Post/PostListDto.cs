@@ -1,4 +1,5 @@
-﻿using SocialMedia.Domain.Entities;
+﻿using SocialMedia.Application.DTOs.User;
+using SocialMedia.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace SocialMedia.Application.DTOs.Post
     {
         public string Id { get; set; }
         public string UserId { get; set; }
+        public UserListDto User { get; set; }
         public string? Content { get; set; }
         public IEnumerable<string>? Files { get; set; }
         public IEnumerable<Domain.Entities.Comment>? Comments { get; set; }

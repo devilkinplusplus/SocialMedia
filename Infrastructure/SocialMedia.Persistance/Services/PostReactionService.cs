@@ -34,7 +34,7 @@ namespace SocialMedia.Persistance.Services
             return postReactions.Count();
         }
 
-        public async Task LikePostAsync(string userId, string postId)
+        public async Task<bool> LikePostAsync(string userId, string postId)
         {
             if (!await IsAlreadyLikedAsync(userId, postId))
             {
@@ -45,14 +45,16 @@ namespace SocialMedia.Persistance.Services
                     PostId = postId,
                     IsLike = true,
                 });
+                await _postReactionWrite.SaveAsync();
+                return true;
             }
             else
             {
                 PostReaction postReaction = await _postReactionRead.GetAsync(x => x.UserId == userId && x.PostId == postId);
                 postReaction.IsLike = !postReaction.IsLike;
+                await _postReactionWrite.SaveAsync();
+                return postReaction.IsLike;
             }
-
-            await _postReactionWrite.SaveAsync();
         }
 
         private async Task<bool> IsAlreadyLikedAsync(string userId, string postId)

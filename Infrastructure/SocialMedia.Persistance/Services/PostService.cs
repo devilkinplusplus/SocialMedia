@@ -26,13 +26,15 @@ namespace SocialMedia.Persistance.Services
         private readonly IFileService _fileService;
         private readonly IPostReactionService _postReactionService;
         private readonly ICacheService _cacheService;
-        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo, IPostReactionService postReactionService, ICacheService cacheService)
+        private readonly IUserService _userService;
+        public PostService(IPostWriteRepository postWriteRepo, IFileService fileService, IPostReadRepository postReadRepo, IPostReactionService postReactionService, ICacheService cacheService, IUserService userService)
         {
             _postWriteRepo = postWriteRepo;
             _fileService = fileService;
             _postReadRepo = postReadRepo;
             _postReactionService = postReactionService;
             _cacheService = cacheService;
+            _userService = userService;
         }
 
         public async Task ToggleArchivePostAsync(string id)
@@ -129,14 +131,15 @@ namespace SocialMedia.Persistance.Services
 
         public async Task<GetAllPostsQueryResponse> GetAllPostsAsync(int page = 0, int size = 5)
         {
-            string cachedData = await _cacheService.GetStringAsync(KeysForCaching.Posts);
-            if (cachedData is not null)
-            {
-                var res = JsonSerializer.Deserialize<List<PostListDto>>(cachedData);
-                return new() { Succeeded = true, Values = res };
-            }
+            //TODO cache mechanicsim
+            //string cachedData = await _cacheService.GetStringAsync(KeysForCaching.Posts);
+            //if (cachedData is not null)
+            //{
+            //    var res = JsonSerializer.Deserialize<List<PostListDto>>(cachedData);
+            //    return new() { Succeeded = true, Values = res };
+            //}
 
-            var posts = await _postReadRepo.GetAll().Include(x => x.PostImages).Include(x => x.Comments)
+            var posts = await _postReadRepo.GetAll().Include(z=>z.User).Include(x => x.PostImages).Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)
                 .Select(x => new PostListDto()
                 {
@@ -145,13 +148,14 @@ namespace SocialMedia.Persistance.Services
                     Content = x.Content,
                     Files = x.PostImages.Select(x => x.Path),
                     Comments = x.Comments,
+                    User = _userService.GetUserById(x.UserId),
                     Likes = _postReactionService.GetPostReactions(x.Id)
                 })
                 .Skip(page * size)
                 .Take(size)
                 .ToListAsync();
 
-            await CachePostsAsync(posts, KeysForCaching.Posts);
+            //await CachePostsAsync(posts, KeysForCaching.Posts);
 
             if (!posts.Any())
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoPostsFoundMessage } };

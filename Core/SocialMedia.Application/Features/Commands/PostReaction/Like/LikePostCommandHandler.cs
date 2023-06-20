@@ -18,8 +18,8 @@ namespace SocialMedia.Application.Features.Commands.PostReaction.Like
 
         public async Task<LikePostCommandResponse> Handle(LikePostCommandRequest request, CancellationToken cancellationToken)
         {
-            await _postReactionService.LikePostAsync(request.UserId, request.PostId);
-            return new() { Succeeded = true };
+            var res = await _postReactionService.LikePostAsync(request.UserId, request.PostId);
+            return new() { Succeeded = true,IsLike = res };
         }
     }
 }
