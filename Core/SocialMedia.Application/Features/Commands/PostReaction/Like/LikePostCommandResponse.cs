@@ -8,5 +8,6 @@ namespace SocialMedia.Application.Features.Commands.PostReaction.Like
 {
     public class LikePostCommandResponse : BaseCommandResponse
     {
+        public bool IsLike { get; set; }
     }
 }

@@ -30,5 +30,6 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User,bool>> filter);
         Task UpdatePasswordAsync(string userId,string newPassword,string resetToken);
         Task<GetUserRolesQueryResponse> GetNonUserRolesAsync(string userId);
+        UserListDto GetUserById(string userId);
     }
 }

@@ -192,6 +192,14 @@ namespace SocialMedia.Persistance.Services
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
             return new() { Succeeded = true, Value = finalUser };
         }
+
+        public UserListDto GetUserById(string userId)
+        {
+            User? user = _context.Users.Include(x => x.ProfileImage).FirstOrDefault(x=>x.Id == userId);
+            var finalUser = _mapper.Map<UserListDto>(user);
+            return finalUser;
+        }
+
         private async Task<ValidationResult> ValidateUserAsync(User user)
         {
             UserValidator validationRules = new();
