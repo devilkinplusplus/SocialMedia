@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using SocialMedia.Application.Abstractions.Storage;
+using SocialMedia.Application.Abstractions.Storage.Local;
+using SocialMedia.Application.Consts;
 using SocialMedia.Application.Features.Commands.Post.Archive;
 using SocialMedia.Application.Features.Commands.Post.Create;
 using SocialMedia.Application.Features.Commands.Post.Delete;
@@ -20,7 +23,7 @@ namespace SocialMedia.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer",Roles = nameof(RoleTypes.User))]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = nameof(RoleTypes.User))]
     public class PostsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -30,18 +33,12 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm]PostCreateCommandRequest request)
+        public async Task<IActionResult> Post(PostCreateCommandRequest request)
         {
-            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
-            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            request.CreatePostDto.UserId = id;
-
             var res = await _mediator.Send(request);
             return Ok(res);
         }
+
 
         [HttpPut]
         public async Task<IActionResult> Put([FromForm] EditPostCommandRequest request)
@@ -86,14 +83,14 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]GetAllPostsQueryRequest request)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPostsQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
         [HttpGet("myPosts")]
-        public async Task<IActionResult> GetMyPosts([FromQuery]GetMyPostsQueryRequest request)
+        public async Task<IActionResult> GetMyPosts([FromQuery] GetMyPostsQueryRequest request)
         {
             var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var handler = new JwtSecurityTokenHandler();

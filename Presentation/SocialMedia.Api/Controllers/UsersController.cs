@@ -98,8 +98,8 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [HttpGet("user")]
-        public async Task<IActionResult> GetOne(GetOneUserQueryRequest request)
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetOne([FromRoute]GetOneUserQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
