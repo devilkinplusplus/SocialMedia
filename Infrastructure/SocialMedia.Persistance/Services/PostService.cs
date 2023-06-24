@@ -141,6 +141,7 @@ namespace SocialMedia.Persistance.Services
 
             var posts = await _postReadRepo.GetAll().Include(z=>z.User).Include(x => x.PostImages).Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)
+                .OrderByDescending(x=>x.Date)
                 .Select(x => new PostListDto()
                 {
                     Id = x.Id,

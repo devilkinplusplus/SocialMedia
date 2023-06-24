@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pzHwecaBWeSnmCfuO+TYt8iOt7nsR+C8RA/ck5qr0sk=",
+  "Hash": "+XzY5l49nfeO5V3NP/gwDLB56WqXnl2q1n1h8BZlXI4=",
   "Source": "SocialMedia.Api",
   "BasePath": "_content/SocialMedia.Api",
   "Mode": "Default",
@@ -66,6 +66,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\postImages\\20230423164509fenerbahce-logo.png"
+    },
+    {
+      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\postImages\\20230622122039meattebulvar.jpeg",
+      "SourceId": "SocialMedia.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
+      "BasePath": "_content/SocialMedia.Api",
+      "RelativePath": "uploads/postImages/20230622122039meattebulvar.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\postImages\\20230622122039meattebulvar.jpeg"
+    },
+    {
+      "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\postImages\\20230622122157meattebulvar1.jpeg",
+      "SourceId": "SocialMedia.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\",
+      "BasePath": "_content/SocialMedia.Api",
+      "RelativePath": "uploads/postImages/20230622122157meattebulvar1.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\postImages\\20230622122157meattebulvar1.jpeg"
     },
     {
       "Identity": "F:\\VsCode\\Projects\\FullStack\\SocialNetwork\\backend\\SocialMedia\\Presentation\\SocialMedia.Api\\wwwroot\\uploads\\userImages\\20230420060322facebookwordbluebackgroundhdfacebook.jpg",
