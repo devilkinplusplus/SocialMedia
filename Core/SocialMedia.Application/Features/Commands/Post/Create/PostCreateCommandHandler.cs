@@ -19,7 +19,7 @@ namespace SocialMedia.Application.Features.Commands.Post.Create
 
         public async Task<PostCreateCommandResponse> Handle(PostCreateCommandRequest request, CancellationToken cancellationToken)
         {
-            return await _postService.CreatePostAsync(request.CreatePostDto);
+            return await _postService.CreatePostAsync(request.Content,request.UserId,request.Files);
         }
     }
 }

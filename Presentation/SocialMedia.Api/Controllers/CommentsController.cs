@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using SocialMedia.Application.Features.Commands.Comment.Create;
 using SocialMedia.Application.Features.Commands.Comment.Delete;
+using SocialMedia.Application.Features.Commands.Comment.SoftDelete;
 using SocialMedia.Application.Features.Commands.Reply.Create;
 using SocialMedia.Application.Features.Commands.Reply.Delete;
 using SocialMedia.Domain.Entities.Identity;
@@ -44,7 +45,13 @@ namespace SocialMedia.Api.Controllers
             var res = await _mediator.Send(request);
             return Ok(res);
         }
-
+        
+        [HttpPut]
+        public async Task<IActionResult> SoftDelete([FromQuery] SoftDeleteCommentRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
 
         [HttpPost("reply")]
         public async Task<IActionResult> Reply(CreateReplyCommandRequest request)

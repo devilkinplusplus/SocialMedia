@@ -9,10 +9,8 @@ namespace SocialMedia.Application.Abstractions.Caching
 {
     public interface ICacheService
     {
-        Task SetStringAsync(string key, string value, double addMinutesToExpire, CacheExpirationType? expirationType);
-        Task SetAsync(string key, byte[] value, double addMinutesToExpire, CacheExpirationType? expirationType);
-        Task<string> GetStringAsync(string key);
-        Task<byte[]> GetAsync(string key);
+        Task SetAsync<T>(string key, T value, TimeSpan duration);
+        Task<T> GetAsync<T>(string key);
         Task RemoveAsync(string key);
     }
 }

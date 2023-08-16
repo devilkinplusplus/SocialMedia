@@ -32,7 +32,7 @@ namespace SocialMedia.Infrastructure.Services
             mail.Body = body;
             foreach (var item in to)
                 mail.To.Add(item);
-            mail.From = new(_configuration["Mail:Username"], "Connectfy Social Media", Encoding.UTF8);
+            mail.From = new(_configuration["Mail:Username"], "Connectfiy Social Media", Encoding.UTF8);
 
             //Send this mail
             SmtpClient smtpClient = new();
@@ -49,12 +49,12 @@ namespace SocialMedia.Infrastructure.Services
             StringBuilder mail = new();
             mail.Append("Hello<br>If you have requested a new password, you can renew your password from the link below.<br><strong> <a target=\"_blank\" href=\"");
 
-            mail.Append(_configuration["Client:AngularClientUrl"]);
-            mail.Append("/changePassword/");
+            mail.Append(_configuration["Client:ReactClientUrl"]);
+            mail.Append("/auth/changePassword/");
             mail.Append(userId);
             mail.Append("/");
             mail.Append(resetToken);
-            mail.AppendLine("\">Click for new password request...</a></strong><br><br><span style=\"font-size:12px;\">NOTE : If this request has not been fulfilled by you, please do not take this mail seriously.</span><br>Regards...<br><br><br>Connectfy Email Support");
+            mail.AppendLine("\">Click for new password request...</a></strong><br><br><span style=\"font-size:12px;\">NOTE : If this request has not been fulfilled by you, please do not take this mail seriously.</span><br>Regards...<br><br><br>Connectify Email Support");
 
             await SendMailAsync(to, "Password Renewal Request", mail.ToString());
         }

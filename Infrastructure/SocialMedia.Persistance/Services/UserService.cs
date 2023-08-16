@@ -16,12 +16,14 @@ using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Application.Features.Queries.User.GetUserRoles;
+using SocialMedia.Application.Features.Queries.User.Suggested;
 using SocialMedia.Application.Validators;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Domain.Entities.Identity;
 using SocialMedia.Domain.Exceptions;
 using SocialMedia.Persistance.Contexts;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SocialMedia.Persistance.Services
@@ -34,6 +36,7 @@ namespace SocialMedia.Persistance.Services
         private readonly IPasswordValidator<User> _passwordValidator;
         private readonly IFileService _fileService;
         private readonly RoleManager<IdentityRole> _roleManager;
+
         public UserService(UserManager<User> userManager, AppDbContext context, IMapper mapper, IPasswordValidator<User> passwordValidator, IFileService fileService, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -184,10 +187,11 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Succeeded = true, Values = userList, UserCount = countOfAllUsers };
         }
-        public async Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter)
+        public async Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter, string followerId, string followingId)
         {
             User? user = await _context.Users.Include(x => x.ProfileImage).FirstOrDefaultAsync(filter);
             var finalUser = _mapper.Map<UserListDto>(user);
+            finalUser.DoIFollow = await DoIFollowAsync(followerId, followingId);
             if (finalUser is null)
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
             return new() { Succeeded = true, Value = finalUser };
@@ -195,7 +199,7 @@ namespace SocialMedia.Persistance.Services
 
         public UserListDto GetUserById(string userId)
         {
-            User? user = _context.Users.Include(x => x.ProfileImage).FirstOrDefault(x=>x.Id == userId);
+            User? user = _context.Users.Include(x => x.ProfileImage).FirstOrDefault(x => x.Id == userId);
             var finalUser = _mapper.Map<UserListDto>(user);
             return finalUser;
         }
@@ -231,5 +235,54 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Values = nonUserRoles, Succeeded = true };
         }
+
+        public async Task<SuggestedPeopleQueryResponse> GetSuggestedPeopleAsync(string userId,int page = 0, int size = 5)
+        {
+            IEnumerable<Suggested> users = await _context.Users
+                .Include(x => x.ProfileImage)
+                .Where(x => x.Id != userId)
+                .OrderBy(x => x.Id) 
+                .Select(x => new Suggested
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    UserName = x.UserName,
+                    ProfileImage = x.ProfileImage.Path,
+                })
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
+
+            foreach (var user in users)
+            {
+                user.PostCount = await GetPostCountAsync(user.Id);
+                user.FollowerCount = await GetFollowerCountAsync(user.Id);
+                user.FollowingCount = await GetFollowingCountAsync(user.Id);
+                user.IsFollowing = await DoIFollowAsync(userId, user.Id);
+            }
+
+            int userCount = await _context.Users.CountAsync();
+
+            if (!users.Any())
+                return new() { Succeeded = false, Errors = new List<string> { Messages.NoUserFoundMessage } };
+
+            return new() { Succeeded = true, Values = users ,UserCount = userCount};
+        }
+
+        private async Task<int> GetPostCountAsync(string currentUserId)
+        {
+            return await _context.Posts.Where(x => x.UserId == currentUserId && x.IsDeleted == false).CountAsync();
+        }
+        private async Task<int> GetFollowerCountAsync(string currentUserId)
+        {
+            return await _context.Follows.Where(x => x.FollowingId == currentUserId && x.IsFollowing == true).CountAsync();
+        }
+        private async Task<int> GetFollowingCountAsync(string currentUserId)
+        {
+            return await _context.Follows.Where(x => x.FollowerId == currentUserId && x.IsFollowing == true).CountAsync();
+        }
+        private async Task<bool> DoIFollowAsync(string followerId, string followingId) =>
+            await _context.Follows.Where(x => x.FollowerId == followerId && x.FollowingId == followingId && x.IsFollowing == true).AnyAsync();
     }
 }

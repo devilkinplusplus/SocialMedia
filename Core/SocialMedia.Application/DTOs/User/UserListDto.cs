@@ -17,5 +17,6 @@ namespace SocialMedia.Application.DTOs.User
         public bool IsPrivate { get; set; }
         public DateTime Date { get; set; }
         public string ProfileImage { get; set; }
+        public bool DoIFollow { get; set; }
     }
 }

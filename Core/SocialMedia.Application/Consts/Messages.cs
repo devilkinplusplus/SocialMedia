@@ -20,5 +20,8 @@ namespace SocialMedia.Application.Consts
         public static string EmptyCommentMessage = "Comment cannot be empty";
         public static string NoUserFoundMessage = "No user founds";
         public static string NoPostsFoundMessage = "No posts founds";
+        public static string NoRanksFoundMessage = "You have no ranks yet";
+        public static string CantGetRanks = "You need to increase interactions to get ranks";
+
     }
 }

@@ -35,35 +35,21 @@ namespace SocialMedia.Api.Controllers
 
             request.FollowerId = id;
 
-            await _mediator.Send(request);
-            return Ok();
-        }
-
-      
-        [HttpGet("myFollowings")]
-        public async Task<IActionResult> Get([FromQuery]MyFollowingsQueryRequest request)
-        {
-            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
-            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            request.Id = id;
-
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
-        [HttpGet("myFollowers")]
+      
+        [HttpGet("followings")]
+        public async Task<IActionResult> Get([FromQuery]MyFollowingsQueryRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet("followers")]
         public async Task<IActionResult> GetFollowers([FromQuery]GetMyFollowersQueryRequest request)
         {
-            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
-            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            request.Id = id;
-
             var res = await _mediator.Send(request);
             return Ok(res);
         }
@@ -85,15 +71,8 @@ namespace SocialMedia.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> AcceptRequest(AcceptRequestCommandRequest request)
         {
-            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
-            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            request.FollowingId = id;
-
-            await _mediator.Send(request);
-            return Ok();
+            var res = await _mediator.Send(request);
+            return Ok(res);
         }
 
     }

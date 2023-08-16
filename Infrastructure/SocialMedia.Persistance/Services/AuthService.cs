@@ -83,7 +83,9 @@ namespace SocialMedia.Persistance.Services
         {
             var settings = new GoogleJsonWebSignature.ValidationSettings()
             {
-                Audience = new List<string> { _configuration["ExternalLoginSettings:Google:ClientId"] }
+                Audience = new List<string> { _configuration["ExternalLoginSettings:Google:ClientId"] },
+                IssuedAtClockTolerance = TimeSpan.FromMinutes(1), // Add tolerance for token issued at time
+                ExpirationTimeClockTolerance = TimeSpan.FromMinutes(1), // Add tolerance for token expiry time
             };
 
             var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
@@ -131,7 +133,8 @@ namespace SocialMedia.Persistance.Services
                         Id = Guid.NewGuid().ToString(),
                         Email = email,
                         UserName = email,
-                        FirstName = name,
+                        FirstName = name.Split(" ")[0],
+                        LastName = name.Split(" ")[1] ?? name.Split(" ")[0],
                     };
                     var identityResult = await _userManager.CreateAsync(user);
                     result = identityResult.Succeeded;

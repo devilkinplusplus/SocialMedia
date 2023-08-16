@@ -26,6 +26,8 @@ namespace SocialMedia.Persistance.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Rank> Ranks { get; set; }
+        public DbSet<UserRank> UserRanks { get; set; }
 
         //Interceptor
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -53,6 +55,18 @@ namespace SocialMedia.Persistance.Contexts
                 .WithMany(x => x.Followings)
                 .HasForeignKey(x => x.FollowingId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserRank>().HasKey(x => new { x.RankId, x.UserId });
+
+            builder.Entity<UserRank>()
+                    .HasOne(x => x.User)
+                    .WithMany(x => x.UserRanks)
+                    .HasForeignKey(x => x.UserId);
+
+            builder.Entity<UserRank>()
+                    .HasOne(x => x.Rank)
+                    .WithMany(x => x.UserRanks)
+                    .HasForeignKey(x => x.RankId);
 
             base.OnModelCreating(builder);
         }

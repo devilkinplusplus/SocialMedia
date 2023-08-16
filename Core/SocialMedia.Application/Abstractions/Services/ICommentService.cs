@@ -12,5 +12,6 @@ namespace SocialMedia.Application.Abstractions.Services
     {
         Task<CreateCommentCommandResponse> CreateCommentAsync(CreateCommentDto comment);
         Task DeleteCommentAsync(string commentId);
+        Task SoftDeleteCommentAsync(string commentId);
     }
 }

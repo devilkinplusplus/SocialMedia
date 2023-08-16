@@ -10,5 +10,7 @@ namespace SocialMedia.Application.Abstractions.Services
     {
         Task<bool> LikePostAsync(string userId,string postId);
         int GetPostReactions(string postId);
+        Task<bool> IsAlreadyLikedAsync(string userId, string postId);
+        bool IsAlreadyLiked(string userId, string postId);
     }
 }

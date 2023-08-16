@@ -9,5 +9,6 @@ namespace SocialMedia.Application.Features.Queries.Post.GetMyPosts
 {
     public class GetMyPostsQueryResponse : BaseQueryListResponse<PostListDto>
     {
+        public int PostCount { get; set; }
     }
 }

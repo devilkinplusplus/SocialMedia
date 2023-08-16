@@ -12,6 +12,7 @@ using SocialMedia.Application.Features.Commands.Post.Delete;
 using SocialMedia.Application.Features.Commands.Post.DeletePostImage;
 using SocialMedia.Application.Features.Commands.Post.Edit;
 using SocialMedia.Application.Features.Commands.PostReaction.Like;
+using SocialMedia.Application.Features.Queries.Post.Get;
 using SocialMedia.Application.Features.Queries.Post.GetAll;
 using SocialMedia.Application.Features.Queries.Post.GetMyPosts;
 using SocialMedia.Domain.Entities.Identity;
@@ -33,12 +34,18 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(PostCreateCommandRequest request)
+        public async Task<IActionResult> Post([FromForm] PostCreateCommandRequest request)
         {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            request.UserId = id;
+
             var res = await _mediator.Send(request);
             return Ok(res);
         }
-
 
         [HttpPut]
         public async Task<IActionResult> Put([FromForm] EditPostCommandRequest request)
@@ -48,21 +55,21 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpDelete("deletePostImage")]
-        public async Task<IActionResult> DeletePostImage(DeletePostImageCommandRequest request)
+        public async Task<IActionResult> DeletePostImage([FromQuery]DeletePostImageCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(DeletePostCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeletePostCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
         }
 
         [HttpPut("archive")]
-        public async Task<IActionResult> Archive(ArchivePostCommandRequest request)
+        public async Task<IActionResult> Archive([FromQuery] ArchivePostCommandRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
@@ -96,10 +103,15 @@ namespace SocialMedia.Api.Controllers
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
             var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            request.AuthUserId = id; 
 
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
 
-            request.UserId = id;
-
+        [HttpGet("post")]
+        public async Task<IActionResult> Get([FromQuery] GetPostCommandRequest request)
+        {
             var res = await _mediator.Send(request);
             return Ok(res);
         }

@@ -16,5 +16,6 @@ namespace SocialMedia.Domain.Entities.Identity
         public string? ProfileImageId { get; set; }
         public ICollection<Follow> Followers { get; set; }
         public ICollection<Follow> Followings { get; set; }
+        public ICollection<UserRank> UserRanks { get; set; }
     }
 }
