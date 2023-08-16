@@ -14,6 +14,6 @@ namespace SocialMedia.Application.Repositories
         IQueryable<T> GetAllWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetAsync(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetByIdAsync(string id, bool tracking = true);
-
+        Task<T> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties);
     }
 }

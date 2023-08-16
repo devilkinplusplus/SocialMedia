@@ -28,6 +28,14 @@ namespace SocialMedia.Application.Automapper
                    .ForPath(dest => dest.ProfileImage.Path, opt => opt.MapFrom(src => src.ProfileImage))
                    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
                    .ReverseMap();
+
+
+            CreateMap<Post, PostListDto>()
+                .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.PostImages.Select(image => image.Path)))
+                .ReverseMap();                                                                                       
+
+
+
         }
     }
 }

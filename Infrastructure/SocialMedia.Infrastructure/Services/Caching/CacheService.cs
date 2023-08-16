@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using SocialMedia.Application.Abstractions.Caching;
 using SocialMedia.Application.Enums;
 using System;
@@ -17,74 +18,25 @@ namespace SocialMedia.Infrastructure.Services.Caching
             _distributedCache = distributedCache;
         }
 
-        public async Task<byte[]> GetAsync(string key) => await _distributedCache.GetAsync(key);
-
-        public async Task<string> GetStringAsync(string key) => await _distributedCache.GetStringAsync(key);
-
-        public async Task RemoveAsync(string key) => await _distributedCache.RemoveAsync(key);
-
-        public async Task SetAsync(string key, byte[] value, double addMinutesToExpire, CacheExpirationType? expirationType)
+        public async Task<T> GetAsync<T>(string key)
         {
-            switch (expirationType)
-            {
-                case CacheExpirationType.SlidingExpiration:
-                    await _distributedCache.SetAsync(key, value, options: new()
-                    {
-                        SlidingExpiration = TimeSpan.FromMinutes(addMinutesToExpire)
-                    });
-                    break;
-                case CacheExpirationType.AbsoluteExpiration:
-                    await _distributedCache.SetAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire)
-                    });
-                    break;
-                case CacheExpirationType.Both:
-                    await _distributedCache.SetAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire),
-                        SlidingExpiration = TimeSpan.FromMinutes(addMinutesToExpire)
-                    });
-                    break;
-                default:
-                    await _distributedCache.SetAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire)
-                    });
-                    break;
-            }
+            var cachedData = await _distributedCache.GetStringAsync(key);
+            return string.IsNullOrEmpty(cachedData) ? default : JsonConvert.DeserializeObject<T>(cachedData);
         }
 
-        public async Task SetStringAsync(string key, string value, double addMinutesToExpire, CacheExpirationType? expirationType)
+        public async Task SetAsync<T>(string key, T value, TimeSpan duration)
         {
-            switch (expirationType)
+            var serializedValue = JsonConvert.SerializeObject(value);
+            await _distributedCache.SetStringAsync(key, serializedValue, new DistributedCacheEntryOptions
             {
-                case CacheExpirationType.SlidingExpiration:
-                    await _distributedCache.SetStringAsync(key, value, options: new()
-                    {
-                        SlidingExpiration = TimeSpan.FromMinutes(addMinutesToExpire)
-                    });
-                    break;
-                case CacheExpirationType.AbsoluteExpiration:
-                    await _distributedCache.SetStringAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire)
-                    });
-                    break;
-                case CacheExpirationType.Both:
-                    await _distributedCache.SetStringAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire * 3),
-                        SlidingExpiration = TimeSpan.FromMinutes(addMinutesToExpire / 3)
-                    });
-                    break;
-                default:
-                    await _distributedCache.SetStringAsync(key, value, options: new()
-                    {
-                        AbsoluteExpiration = DateTime.Now.AddMinutes(addMinutesToExpire)
-                    });
-                    break;
-            }
+                AbsoluteExpirationRelativeToNow = duration
+            });
         }
+
+        public async Task RemoveAsync(string key)
+        {
+            await _distributedCache.RemoveAsync(key);
+        }
+
     }
 }

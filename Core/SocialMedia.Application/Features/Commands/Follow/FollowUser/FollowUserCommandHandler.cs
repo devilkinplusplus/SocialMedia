@@ -18,8 +18,8 @@ namespace SocialMedia.Application.Features.Commands.Follow.FollowUser
 
         public async Task<FollowUserCommandResponse> Handle(FollowUserCommandRequest request, CancellationToken cancellationToken)
         {
-            await _followService.FollowUserAsync(request.FollowerId, request.FollowingId);
-            return new() { Succeeded = true };
+            var res = await _followService.FollowUserAsync(request.FollowerId, request.FollowingId);
+            return new() { Succeeded = true ,FollowState = res};
         }
     }
 }

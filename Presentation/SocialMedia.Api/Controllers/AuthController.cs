@@ -22,6 +22,7 @@ namespace SocialMedia.Api.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommandRequest request)
         {
@@ -37,14 +38,14 @@ namespace SocialMedia.Api.Controllers
         }
 
         [HttpPost("googleLogin")]
-        public async Task<IActionResult> GoogleLogin(GoogleLoginCommandRequest request)
+        public async Task<IActionResult> GoogleLogin([FromBody]GoogleLoginCommandRequest request)
         {
             var response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpPost("facebookLogin")]
-        public async Task<IActionResult> FacebookLogin(FacebookLoginCommandRequest request)
+        public async Task<IActionResult> FacebookLogin([FromBody]FacebookLoginCommandRequest request)
         {
             var response = await _mediator.Send(request);
             return Ok(response);

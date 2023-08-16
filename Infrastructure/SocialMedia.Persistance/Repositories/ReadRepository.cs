@@ -40,12 +40,25 @@ namespace SocialMedia.Persistance.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+
         public async Task<T> GetByIdAsync(string id, bool tracking = true)
         {
             var query = Table.Where(x=>x.Id == id);
             if (!tracking)
                 query = query.AsNoTracking();
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties)
+        {
+            var query = _context.Set<T>().AsQueryable();
+
+            if (includeProperties != null)
+            {
+                query = includeProperties.Aggregate(query, (current, include) => current.Include(include));
+            }
+
+            return await query.Where(filter).FirstOrDefaultAsync();
         }
     }
 }

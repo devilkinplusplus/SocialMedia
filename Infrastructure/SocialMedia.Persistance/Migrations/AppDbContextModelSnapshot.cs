@@ -397,6 +397,20 @@ namespace SocialMedia.Persistance.Migrations
                     b.ToTable("PostReactions");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Rank", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ranks");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.Reply", b =>
                 {
                     b.Property<string>("Id")
@@ -427,6 +441,21 @@ namespace SocialMedia.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.UserRank", b =>
+                {
+                    b.Property<string>("RankId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RankId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRanks");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
@@ -524,13 +553,13 @@ namespace SocialMedia.Persistance.Migrations
                     b.HasOne("SocialMedia.Domain.Entities.Identity.User", "Follower")
                         .WithMany("Followers")
                         .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SocialMedia.Domain.Entities.Identity.User", "Following")
                         .WithMany("Followings")
                         .HasForeignKey("FollowingId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Follower");
@@ -596,6 +625,25 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialMedia.Domain.Entities.UserRank", b =>
+                {
+                    b.HasOne("SocialMedia.Domain.Entities.Rank", "Rank")
+                        .WithMany("UserRanks")
+                        .HasForeignKey("RankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Domain.Entities.Identity.User", "User")
+                        .WithMany("UserRanks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rank");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Domain.Entities.PostImage", b =>
                 {
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
@@ -617,6 +665,8 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("Followers");
 
                     b.Navigation("Followings");
+
+                    b.Navigation("UserRanks");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
@@ -626,6 +676,11 @@ namespace SocialMedia.Persistance.Migrations
                     b.Navigation("PostImages");
 
                     b.Navigation("PostReactions");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Rank", b =>
+                {
+                    b.Navigation("UserRanks");
                 });
 #pragma warning restore 612, 618
         }

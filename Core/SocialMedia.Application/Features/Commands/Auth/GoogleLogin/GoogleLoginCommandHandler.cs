@@ -20,7 +20,7 @@ namespace SocialMedia.Application.Features.Commands.Auth.GoogleLogin
         public async Task<GoogleLoginCommandResponse> Handle(GoogleLoginCommandRequest request, CancellationToken cancellationToken)
         {
             Token token = await _authService.GoogleLoginAsync(request.IdToken);
-            return new() { Token = token };
+            return new() { Token = token , Succeeded = true };
         }
     }
 }

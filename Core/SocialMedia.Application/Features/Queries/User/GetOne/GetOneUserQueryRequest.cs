@@ -11,6 +11,8 @@ namespace SocialMedia.Application.Features.Queries.User.GetOne
 {
     public class GetOneUserQueryRequest : IRequest<GetOneUserQueryResponse>
     {
+        public string? FollowingId { get; set; }
+        public string? FollowerId { get; set; }
         public string UserId { get; set; }
     }
 }

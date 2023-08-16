@@ -18,7 +18,7 @@ namespace SocialMedia.Application.Features.Queries.User.GetOne
 
         public async Task<GetOneUserQueryResponse> Handle(GetOneUserQueryRequest request, CancellationToken cancellationToken)
         {
-           return await _userService.GetOneUserAsync(x=>x.Id == request.UserId);
+           return await _userService.GetOneUserAsync(x=>x.Id == request.UserId,request.FollowerId,request.FollowingId);
         }
     }
 }

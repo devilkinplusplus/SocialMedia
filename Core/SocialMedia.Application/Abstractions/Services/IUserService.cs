@@ -7,6 +7,7 @@ using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Application.Features.Queries.User.GetUserRoles;
+using SocialMedia.Application.Features.Queries.User.Suggested;
 using SocialMedia.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
@@ -24,12 +25,13 @@ namespace SocialMedia.Application.Abstractions.Services
         Task<ChangePasswordCommandResponse> ChangePasswordAsync(string userId, string newPassword);
         Task<ChangeVisibilityCommandResponse> ChangeVisibilityAsync(string userId);
         Task<EditUserCommandResponse> EditUserAsync(EditUserDto model);
-        Task UploadProfileImageAsync(string userId,IFormFile file);
+        Task UploadProfileImageAsync(string userId, IFormFile file);
         Task<bool> AssignRoleAsync(string userId, string roleTypeStr);
         Task<GetAllUsersQueryResponse> GetAllUsersAsync(int page = 0, int size = 5);
-        Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User,bool>> filter);
-        Task UpdatePasswordAsync(string userId,string newPassword,string resetToken);
+        Task<GetOneUserQueryResponse> GetOneUserAsync(Expression<Func<User, bool>> filter,string followerId,string followingId);
+        Task UpdatePasswordAsync(string userId, string newPassword, string resetToken);
         Task<GetUserRolesQueryResponse> GetNonUserRolesAsync(string userId);
         UserListDto GetUserById(string userId);
+        Task<SuggestedPeopleQueryResponse> GetSuggestedPeopleAsync(string userId,int page = 0, int size = 5);
     }
 }

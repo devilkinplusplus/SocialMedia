@@ -8,6 +8,7 @@ using SocialMedia.Application.Abstractions.Storage;
 using SocialMedia.Application.Abstractions.Storage.Local;
 using SocialMedia.Application.DTOs.User;
 using SocialMedia.Application.Features.Commands.Auth.Login;
+using SocialMedia.Application.Features.Commands.Ranks;
 using SocialMedia.Application.Features.Commands.User.AssignRole;
 using SocialMedia.Application.Features.Commands.User.ChangePassword;
 using SocialMedia.Application.Features.Commands.User.ChangeVisibility;
@@ -15,9 +16,11 @@ using SocialMedia.Application.Features.Commands.User.Create;
 using SocialMedia.Application.Features.Commands.User.Edit;
 using SocialMedia.Application.Features.Commands.User.ResetPassword;
 using SocialMedia.Application.Features.Commands.User.UploadProfileImage;
+using SocialMedia.Application.Features.Queries.Rank.GetUserRanks;
 using SocialMedia.Application.Features.Queries.User.GetAll;
 using SocialMedia.Application.Features.Queries.User.GetOne;
 using SocialMedia.Application.Features.Queries.User.GetUserRoles;
+using SocialMedia.Application.Features.Queries.User.Suggested;
 using SocialMedia.Domain.Entities.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -98,8 +101,8 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetOne([FromRoute]GetOneUserQueryRequest request)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetOne([FromQuery]GetOneUserQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);
@@ -108,6 +111,33 @@ namespace SocialMedia.Api.Controllers
         [HttpPost("resetPassword")]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet("suggesteds")]
+        public async Task<IActionResult> Suggesteds([FromQuery]SuggestedPeopleQueryRequest request)
+        {
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(_bearer_token);
+            var id = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            request.UserId = id;
+
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpPost("rank")]
+        public async Task<IActionResult> Ranks(AchieveRankCommandRequest request)
+        {
+            var res = await _mediator.Send(request);
+            return Ok(res);
+        }
+
+        [HttpGet("ranks")]
+        public async Task<IActionResult> UserRanks([FromQuery]GetUserRanksQueryRequest request)
         {
             var res = await _mediator.Send(request);
             return Ok(res);

@@ -18,7 +18,7 @@ namespace SocialMedia.Application.Features.Commands.Post.Edit
 
         public async Task<EditPostCommandResponse> Handle(EditPostCommandRequest request, CancellationToken cancellationToken)
         {
-            return await _postService.EditPostAsync(request.EditPostDto);
+            return await _postService.EditPostAsync(request.Id,request.Content,request.Files);
         }
     }
 }

@@ -54,6 +54,7 @@ namespace SocialMedia.Persistance
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IFollowService,FollowService>();
+            services.AddScoped<IRankService, RankService>();
 
             services.AddScoped<IProfileImageReadRepository, ProfileImageReadRepository>();
             services.AddScoped<IProfileImageWriteRepository, ProfileImageWriteRepository>();
