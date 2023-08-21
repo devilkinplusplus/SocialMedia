@@ -81,7 +81,6 @@ namespace SocialMedia.Persistance.Services
             }
             return new() { Succeeded = false };
         }
-
         public async Task<CreateUserCommandResponse> CreateUserAsync(CreateUserDto model)
         {
             User user = _mapper.Map<User>(model);
@@ -104,7 +103,6 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Succeeded = false, Errors = vResults.Errors.Select(x => x.ErrorMessage).ToList() };
         }
-
         public async Task<EditUserCommandResponse> EditUserAsync(EditUserDto model)
         {
             User? user = await _userManager.FindByIdAsync(model.Id);
@@ -129,7 +127,6 @@ namespace SocialMedia.Persistance.Services
             }
             return new() { Succeeded = false };
         }
-
         public async Task UpdateRefreshTokenAsync(string refreshToken, User user, DateTime accessTokenDate, int addOnAccessTokenDate)
         {
             if (user is not null)
@@ -141,14 +138,11 @@ namespace SocialMedia.Persistance.Services
             else
                 throw new UserNotFoundException();
         }
-
         private async Task<bool> IsEmailExist(string email) => await _context.Users.AnyAsync(x => x.Email == email);
-
         private async Task<IdentityResult> UpdateUserAsync(User user)
         {
             return await _userManager.UpdateAsync(user);
         }
-
         public async Task UploadProfileImageAsync(string userId, IFormFile file)
         {
             User user = await _userManager.FindByIdAsync(userId);
@@ -157,7 +151,6 @@ namespace SocialMedia.Persistance.Services
             user.ProfileImageId = profileImage.Id;
             await UpdateUserAsync(user);
         }
-
         public async Task<bool> AssignRoleAsync(string userId, string roleTypeStr)
         {
             if (!Enum.TryParse<RoleTypes>(roleTypeStr, out RoleTypes roleType))
@@ -170,7 +163,6 @@ namespace SocialMedia.Persistance.Services
             IdentityResult res = await _userManager.AddToRoleAsync(user, roleType.ToString());
             return res.Succeeded;
         }
-
         public async Task<GetAllUsersQueryResponse> GetAllUsersAsync(int page = 0, int size = 5)
         {
             IEnumerable<User> users = await _context.Users.Include(x => x.ProfileImage)
@@ -196,21 +188,18 @@ namespace SocialMedia.Persistance.Services
                 return new() { Succeeded = false, Errors = new List<string>() { Messages.NoUserFoundMessage } };
             return new() { Succeeded = true, Value = finalUser };
         }
-
         public UserListDto GetUserById(string userId)
         {
             User? user = _context.Users.Include(x => x.ProfileImage).FirstOrDefault(x => x.Id == userId);
             var finalUser = _mapper.Map<UserListDto>(user);
             return finalUser;
         }
-
         private async Task<ValidationResult> ValidateUserAsync(User user)
         {
             UserValidator validationRules = new();
             ValidationResult result = await validationRules.ValidateAsync(user);
             return result;
         }
-
         public async Task UpdatePasswordAsync(string userId, string newPassword, string resetToken)
         {
             User user = await _userManager.FindByIdAsync(userId);
@@ -225,7 +214,6 @@ namespace SocialMedia.Persistance.Services
                     throw new PasswordChangeFailedException();
             }
         }
-
         public async Task<GetUserRolesQueryResponse> GetNonUserRolesAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -235,7 +223,6 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Values = nonUserRoles, Succeeded = true };
         }
-
         public async Task<SuggestedPeopleQueryResponse> GetSuggestedPeopleAsync(string userId,int page = 0, int size = 5)
         {
             IEnumerable<Suggested> users = await _context.Users
@@ -269,7 +256,6 @@ namespace SocialMedia.Persistance.Services
 
             return new() { Succeeded = true, Values = users ,UserCount = userCount};
         }
-
         private async Task<int> GetPostCountAsync(string currentUserId)
         {
             return await _context.Posts.Where(x => x.UserId == currentUserId && x.IsDeleted == false).CountAsync();

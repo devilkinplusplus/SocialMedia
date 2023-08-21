@@ -34,8 +34,6 @@ namespace SocialMedia.Application.Automapper
                 .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.PostImages.Select(image => image.Path)))
                 .ReverseMap();                                                                                       
 
-
-
         }
     }
 }

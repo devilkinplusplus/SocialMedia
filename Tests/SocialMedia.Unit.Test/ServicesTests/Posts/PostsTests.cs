@@ -17,34 +17,34 @@ namespace SocialMedia.Unit.Test.ServicesTests.Posts
     public class PostsTests
     {
 
-        //[Theory]
-        //[ClassData(typeof(CreatePostParameters))]
-        //public async Task CreatePostTestsAsync(CreatePostDto inputDto, PostCreateCommandResponse expectedResponse)
-        //{
-        //    // Arrange
-        //    var mockPostService = new Mock<IPostService>();
-        //    mockPostService
-        //        .Setup(x => x.CreatePostAsync(It.IsAny<CreatePostDto>()))
-        //        .ReturnsAsync(expectedResponse);
+        [Theory]
+        [ClassData(typeof(CreatePostParameters))]
+        public async Task CreatePostTestsAsync(CreatePostDto inputDto, PostCreateCommandResponse expectedResponse)
+        {
+            // Arrange
+            var mockPostService = new Mock<IPostService>();
+            mockPostService
+                .Setup(x => x.CreatePostAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IFormFileCollection>()))
+                .ReturnsAsync(expectedResponse);
 
-        //    // Act
-        //    var actualResponse = await mockPostService.Object.CreatePostAsync(inputDto);
+            // Act
+            var actualResponse = await mockPostService.Object.CreatePostAsync(inputDto.Content,inputDto.UserId,inputDto.Files);
 
-        //    // Assert
-        //    Assert.Equal(expectedResponse.Succeeded, actualResponse.Succeeded);
-        //}
+            // Assert
+            Assert.Equal(expectedResponse.Succeeded, actualResponse.Succeeded);
+        }
 
         [Theory]
         [ClassData(typeof(EditPostParameters))]
         public async Task EditPostTestsAsync(EditPostDto inputDto,EditPostCommandResponse expextedResponse)
         {
-            //var mockPostService = new Mock<IPostService>();
-            //mockPostService.Setup(x=>x.EditPostAsync(It.IsAny<EditPostDto>()))
-            //    .ReturnsAsync(expextedResponse);
+            var mockPostService = new Mock<IPostService>();
+            mockPostService.Setup(x => x.EditPostAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IFormFileCollection>()))
+                .ReturnsAsync(expextedResponse);
 
-            //var actualResponse = await mockPostService.Object.EditPostAsync(inputDto);
+            var actualResponse = await mockPostService.Object.EditPostAsync(inputDto.Id,inputDto.Content,inputDto.Files);
 
-            //Assert.Equal(expextedResponse.Succeeded, actualResponse.Succeeded);
+            Assert.Equal(expextedResponse.Succeeded, actualResponse.Succeeded);
         }
     }
 }

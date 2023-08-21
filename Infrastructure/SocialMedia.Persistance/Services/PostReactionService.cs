@@ -60,7 +60,6 @@ namespace SocialMedia.Persistance.Services
         public async Task<bool> IsAlreadyLikedAsync(string userId, string postId)
             => await _context.PostReactions.AnyAsync(x => x.UserId == userId && x.PostId == postId);
 
-
         public bool IsAlreadyLiked(string userId, string postId)
         {
             PostReaction? entity = _context.PostReactions.FirstOrDefault(x => x.UserId == userId && x.PostId == postId);

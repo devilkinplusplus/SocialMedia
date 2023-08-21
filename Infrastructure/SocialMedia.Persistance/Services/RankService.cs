@@ -66,7 +66,7 @@ namespace SocialMedia.Persistance.Services
             {
                 string id = await _context.Ranks.Where(x => x.Name == rank).Select(x => x.Id).FirstOrDefaultAsync();
 
-                bool combinationExists = await HasUserAlreadyRank(userId, id);
+                bool combinationExists = await HasUserAlreadyRankAsync(userId, id);
 
                 if (combinationExists) continue;
 
@@ -92,7 +92,7 @@ namespace SocialMedia.Persistance.Services
             return new() { Succeeded = true, Value = new RankDto { Names = ranks } };
         }
 
-        private async Task<bool> HasUserAlreadyRank(string userId, string rankId)
+        private async Task<bool> HasUserAlreadyRankAsync(string userId, string rankId)
             => await _context.UserRanks.AnyAsync(x => x.UserId == userId && x.RankId == rankId);
 
         private async Task<RankCalculateDto> CalculateAsync(string userId)
