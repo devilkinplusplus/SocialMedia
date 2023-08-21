@@ -18,9 +18,7 @@ namespace SocialMedia.SignalR.HubServices
             _context = context;
         }
 
-        public async Task SendMessageAsync(string message, User user)
-        {
-            await _context.Clients.All.SendAsync("receiveMessage",message, user);    
-        }
+       
+
     }
 }

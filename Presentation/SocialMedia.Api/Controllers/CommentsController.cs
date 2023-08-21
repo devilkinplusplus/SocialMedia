@@ -67,6 +67,5 @@ namespace SocialMedia.Api.Controllers
             return Ok(res);
         }
 
-
     }
 }

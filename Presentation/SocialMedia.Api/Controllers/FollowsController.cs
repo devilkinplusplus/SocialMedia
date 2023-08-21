@@ -38,7 +38,6 @@ namespace SocialMedia.Api.Controllers
             var res = await _mediator.Send(request);
             return Ok(res);
         }
-
       
         [HttpGet("followings")]
         public async Task<IActionResult> Get([FromQuery]MyFollowingsQueryRequest request)

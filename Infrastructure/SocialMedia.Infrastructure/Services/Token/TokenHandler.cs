@@ -29,6 +29,7 @@ namespace SocialMedia.Infrastructure.Services
             _userManager = userManager;
         }
 
+        //Refresh token should be created manually
         public string CreateRefreshToken()
         {
             byte[] number = new byte[32];

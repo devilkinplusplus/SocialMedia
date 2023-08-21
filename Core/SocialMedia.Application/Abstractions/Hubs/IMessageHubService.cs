@@ -9,6 +9,5 @@ namespace SocialMedia.Application.Abstractions.Hubs
 {
     public interface IMessageHubService
     {
-        Task SendMessageAsync(string message, User user);
     }
 }
