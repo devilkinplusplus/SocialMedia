@@ -12,7 +12,6 @@ namespace SocialMedia.SignalR
     {
         public static void MapHubs(this WebApplication webApplication)
         {
-            webApplication.MapHub<ChatHub>("/chat-hub");
             webApplication.MapHub<NotificationHub>("/notification-hub");
         }
     }
