@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SocialMedia.Application.Abstractions.Hubs;
-using SocialMedia.SignalR.HubServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +11,6 @@ namespace SocialMedia.SignalR
         public static void AddSignalRServices(this IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddTransient<IMessageHubService, MessageHubService>();
-            services.AddTransient<INotificationHubService, NotificationHubService>();
         }
     }
 }
